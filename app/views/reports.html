@@ -1,0 +1,30 @@
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4" align="center">
+                <h1>Baseline</h1>
+            </div>
+            <div class="col-md-4" align="center">
+                <h1>S0</h1>
+            </div>
+            <div class="col-md-4" align="center">
+                <h1>S1</h1>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        {{#each filteredContent}}
+        <div class="row">
+            <div class="col-md-4">
+                {{view App.MyColumnView columnno=1}}
+            </div>
+            <div class="col-md-4">
+                {{view App.MyColumnView columnno=2}}
+            </div>
+            <div class="col-md-4">
+                {{view App.MyColumnView columnno=3}}
+            </div>
+        </div>
+        {{/each}}
+    </div>
+</div>

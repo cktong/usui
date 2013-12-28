@@ -1,0 +1,22 @@
+<h4>Description for SQL query: {{chart.desc}}</h4>
+<hr>
+<b>Table:</b> {{chart.table}}<br>
+<span ng-show="chart.filter"><b>Apply filter:</b> {{chart.filter}}<br></span>
+<b>Fields:</b> {{chart.fields}}<br>
+<b>Group by:</b> {{chart.groupby}}<br>
+<span ng-show="chart.limit"><b>Limit:</b> {{chart.limit}}<br></span>
+<span ng-show="chart.sort"><b>Sort:</b> {{chart.sort}}<br></span>
+<span ng-show="chart.orderdesc"><b>Descending:</b> {{chart.orderdesc}}<br></span>
+<span ng-show="chart.jointoparcels"><b>Parcel join:</b> {{chart.jointoparcels}}<br></span>
+
+<div ng-show="isEditing">
+<hr>
+<div ng-include src="'views/chart_edit.html'"></div>
+<button class="btn btn-default" ng-click="saveLocally()">Save locally</button>
+<button class="btn btn-default" ng-click="saveToDB()">Save to database</button>
+</div>
+<div ng-hide="isEditing">
+<button class="btn btn-default" ng-click="editChart()">Edit this chart</button>
+<hr>
+<div ng-include src="'views/chart_display.html'"></div>
+</div>

@@ -1,0 +1,28 @@
+<div class="widget stacked widget-table action-table">
+    <div class="widget-header">
+        <i class="icon-th-list"></i>
+        <h3>Available Chart Details</h3>
+    </div> <!-- /widget-header -->
+    <div class="widget-content">
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th></th>
+                <th>Description</th>
+                <th>Table</th>
+                <th>Metric</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="chart in charts">
+                <td><a ng-href="#/charts/{{$index}}">View</a></td>
+                <td>{{chart.desc}}</td>
+                <td>{{chart.table}}</td>
+                <td>{{chart.fields}}</td>
+                <td><a ng-href="#/charts" ng-click="deleteChart($index)">Delete</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div> <!-- /widget-content -->
+</div> <!-- /widget -->

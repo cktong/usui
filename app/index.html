@@ -1,0 +1,80 @@
+<!doctype html>
+<!--[if lt IE 7]>
+<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <title>USUI</title>
+
+    <link rel="stylesheet" href="styles/nv.d3.css"/>
+
+    <link href="styles/bootstrap.min.css" rel="stylesheet">
+    <link href="styles/bootstrap-responsive.min.css" rel="stylesheet">
+
+    <link href="styles/googlefont.css" rel="stylesheet">
+    <link href="styles/font-awesome.min.css" rel="stylesheet">
+
+    <link href="styles/ui-lightness/jquery-ui-1.10.0.custom.min.css" rel="stylesheet">
+
+    <link href="styles/base-admin-3.css" rel="stylesheet">
+    <link href="styles/base-admin-3-responsive.css" rel="stylesheet">
+
+    <link href="styles/custom.css" rel="stylesheet">
+
+    <!-- build:css(.tmp) styles/main.css -->
+    <!-- endbuild -->
+</head>
+<body ng-app="usuiApp">
+<!--[if lt IE 7]>
+<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
+    your browser</a> to improve your experience.</p>
+<![endif]-->
+
+<!--[if lt IE 9]>
+<script src="bower_components/es5-shim/es5-shim.js"></script>
+<script src="bower_components/json3/lib/json3.min.js"></script>
+<![endif]-->
+
+<!-- Add your site or application content here -->
+
+<div ng-include src="'navbar.html'"></div>
+
+<div ng-include src="'subnavbar.html'" ng-controller="navbarCtrl"></div>
+
+<div ui-view=""></div>
+
+<div ng-include src="'footer.html'"></div>
+
+<script src="bower_components/jquery/jquery.js"></script>
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+
+<!-- build:js scripts/plugins.js -->
+
+<!-- endbuild -->
+
+<!-- build:js scripts/modules.js -->
+<script src="bower_components/angular-resource/angular-resource.js"></script>
+<script src="bower_components/angular-cookies/angular-cookies.js"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+<!-- endbuild -->
+
+<!-- build:js({.tmp,app}) scripts/scripts.js -->
+<script src="scripts/app.js"></script>
+<script src="scripts/controllers/navbar.js"></script>
+<script src="scripts/controllers/main.js"></script>
+<script src="scripts/controllers/charts.js"></script>
+<script src="scripts/controllers/chart.js"></script>
+<script src="scripts/controllers/reports.js"></script>
+<!-- endbuild -->
+</body>
+</html>

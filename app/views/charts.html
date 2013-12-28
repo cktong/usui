@@ -1,0 +1,23 @@
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <table class='table'>
+                    <thead>
+                    <tr><th>Available charts:</th></tr>
+                    </thead>
+                    <tr ng-repeat="chart in charts"><td>
+                        <a ng-href="#/charts/{{$index}}">{{chart.desc}} <small class='muted'>on {{chart.table}}</small></a>
+                    </td></tr>
+                    <tr><td>
+                        <button ng-click="newChart()" class="btn btn-default">Create new</button>
+                    </td></tr>
+                </table>
+            </div>
+            <div class="col-md-8">
+                <div ng-show="locationEquals('/charts')" ng-include src="'views/chart_list.html'"></div>
+                <div ui-view></div>
+            </div>
+        </div>
+    </div>
+</div>
