@@ -15,11 +15,11 @@
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="chart in charts">
+            <tr ng-repeat="chart in chartsdb.rows">
                 <td><a ng-href="#/charts/{{$index}}">View</a></td>
-                <td>{{chart.desc}}</td>
-                <td>{{chart.table}}</td>
-                <td>{{chart.fields}}</td>
+                <td>{{chart.doc.desc}}</td>
+                <td>{{chart.doc.table}}</td>
+                <td>{{chart.doc.metric}}</td>
                 <td><a ng-href="#/charts" ng-click="deleteChart($index)">Delete</a></td>
             </tr>
             </tbody>

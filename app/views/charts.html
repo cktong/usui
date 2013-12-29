@@ -6,8 +6,8 @@
                     <thead>
                     <tr><th>Available charts:</th></tr>
                     </thead>
-                    <tr ng-repeat="chart in charts"><td>
-                        <a ng-href="#/charts/{{$index}}">{{chart.desc}} <small class='muted'>on {{chart.table}}</small></a>
+                    <tr ng-repeat="chart in chartsdb.rows"><td>
+                        <a ng-href="#/charts/{{$index}}">{{chart.doc.desc}} <small class='muted'>on {{chart.doc.table}}</small></a>
                     </td></tr>
                     <tr><td>
                         <button ng-click="newChart()" class="btn btn-default">Create new</button>

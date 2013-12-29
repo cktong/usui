@@ -2,12 +2,8 @@
 
 /*
     get dthree_chart to work
-
     try charts in bamboo (else get specs from couchdb)
-
-    load charts from database
-    save to database
-
+    deal with errors and test
     reports page
  */
 
@@ -15,7 +11,8 @@
   'ngCookies',
   'ngResource',
   'ngSanitize',
-  'ui.router'
+  'ui.router',
+  'CornerCouch'
 ])
   .config(function ($stateProvider, $urlRouterProvider) {
     //delete $httpProvider.defaults.headers.common['X-Requested-With'];
