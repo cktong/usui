@@ -1,7 +1,6 @@
 'use strict';
 
 /*
-    get dthree_chart to work
     try charts in bamboo
     reports page
  */
@@ -11,7 +10,8 @@
   'ngResource',
   'ngSanitize',
   'ui.router',
-  'CornerCouch'
+  'CornerCouch',
+  'nvd3ChartDirectives'
 ])
   .config(function ($stateProvider, $urlRouterProvider) {
     //delete $httpProvider.defaults.headers.common['X-Requested-With'];

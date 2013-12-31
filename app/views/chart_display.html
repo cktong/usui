@@ -5,6 +5,20 @@
     </div>
     <!-- /widget-header -->
     <div class="widget-content">
-        view App.MyChartView gno=id store=store
+        <nvd3-multi-bar-chart
+                data="chartData"
+                id="d3chart"
+                width="550"
+                height="350"
+                margin="{top: 10, right: 10, bottom: 40 , left: 80}"
+                tooltipcontent="toolTipContentFunction()"
+                interative="true"
+                tooltips="true"
+                showXAxis="true"
+                xaxislabel="{{chart.groupby}}"
+                yaxislabel="{{chart.desc}} (in thousands)"
+                showYAxis="true">
+            <svg></svg>
+        </nvd3-multi-bar-chart>
     </div><!-- /area-chart -->
 </div><!-- /widget-content -->

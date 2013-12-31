@@ -47,7 +47,8 @@ angular.module('usuiApp')
     chartsdb.getchartbyind = function(ind) {
         var arr = $.grep(this.rows,function(a) {return a.id == ind;});
         if(arr.length == 0) {
-            growl("error","Error","Chart not found.");
+            // somtimes this is ok if you're accessing a chart directly
+            // growl("error","Error","Chart not found.");
             return;
         }
         return arr[0].doc;
