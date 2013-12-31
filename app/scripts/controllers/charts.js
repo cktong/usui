@@ -9,15 +9,9 @@ angular.module('usuiApp')
             return $location.path() == path;
         }
         $scope.newChart = function () {
-            $scope.chartsdb.newDoc({desc:"New chart"}).save()
-            .success(function() {
-                $scope.chartsdb.queryRefresh();
-            })
+            $scope.chartsdb.newchart();
         }
         $scope.deleteChart = function (ind) {
-            $scope.chartsdb.getobjbyind(ind).remove()
-            .success(function () {
-                $scope.chartsdb.queryRefresh();
-            })
+            $scope.chartsdb.deletechart(ind);
         }
     });

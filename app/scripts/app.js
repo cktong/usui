@@ -1,9 +1,8 @@
 'use strict';
 
 /*
-    deal with errors and test
     get dthree_chart to work
-    try charts in bamboo (else get specs from couchdb)
+    try charts in bamboo
     reports page
  */
 
@@ -39,6 +38,12 @@
         controller: 'ReportsCtrl'
       })
   })
+
+// message growler
+function growl(type,title,text,sticky) {
+    sticky = sticky || false;
+    $.msgGrowl ({type: type, title: title, text: text, sticky: sticky});
+}
 
 
 

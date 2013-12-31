@@ -19,6 +19,6 @@ angular.module('usuiApp')
         }
         $scope.saveToDB = function (ind) {
             $scope.isEditing = false;
-            $scope.chartsdb.getobjbyind(ind).save();
+            $scope.chartsdb.saveind(ind);
         }
     });
