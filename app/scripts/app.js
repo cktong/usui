@@ -1,9 +1,9 @@
 'use strict';
 
 /*
+    deal with errors and test
     get dthree_chart to work
     try charts in bamboo (else get specs from couchdb)
-    deal with errors and test
     reports page
  */
 

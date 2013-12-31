@@ -1,0 +1,75 @@
+Content-Type: multipart/mixed; boundary="==b78a28820b764108839f74aa30c06c38=="
+
+--==b78a28820b764108839f74aa30c06c38==
+Content-ID: 0f2746a1e5a528e90e45256c640044ca
+Content-Length: 327
+Content-MD5: iZ/MeaZ002GP5QrutgTR4g==
+Content-Type: application/json;charset=utf-8
+ETag: "3-ab34e6981b2d14aab1c908bbc741d1dd"
+
+{"sort": true, "name": null, "_rev": "3-ab34e6981b2d14aab1c908bbc741d1dd", "groupby": "sic_group", "filter": "", "limit": "10", "jointoparcels": false, "table": "establishments", "orderdesc": true, "_id": "0f2746a1e5a528e90e45256c640044ca", "port": 8765, "metric": "sum(employees)", "desc": "Count of Establishments by Sector"}
+--==b78a28820b764108839f74aa30c06c38==
+Content-ID: 0f2746a1e5a528e90e45256c64004d94
+Content-Length: 316
+Content-MD5: 5g9XDgVJXmFfzDLXu9fFjQ==
+Content-Type: application/json;charset=utf-8
+ETag: "7-87a95ae381d6733b987f7ed5195a66e2"
+
+{"sort": false, "name": null, "_rev": "7-87a95ae381d6733b987f7ed5195a66e2", "groupby": "zgpgroup_id", "filter": "", "limit": "", "jointoparcels": true, "table": "baseline_ref_a1_households", "orderdesc": false, "_id": "0f2746a1e5a528e90e45256c64004d94", "port": 8764, "metric": "persons.sum()", "desc": "Population"}
+--==b78a28820b764108839f74aa30c06c38==
+Content-ID: 0f2746a1e5a528e90e45256c640091d3
+Content-Length: 276
+Content-MD5: DkbFj6bx5WCFxEUJ1Xz0cA==
+Content-Type: application/json;charset=utf-8
+ETag: "1-ea1d361334428c87b5da3ca0d5f5c8a7"
+
+{"sort": false, "name": null, "_rev": "1-ea1d361334428c87b5da3ca0d5f5c8a7", "groupby": null, "filter": null, "limit": null, "jointoparcels": false, "table": null, "orderdesc": false, "_id": "0f2746a1e5a528e90e45256c640091d3", "port": null, "metric": null, "desc": "New chart"}
+--==b78a28820b764108839f74aa30c06c38==
+Content-ID: 1
+Content-Length: 363
+Content-MD5: octlDZhkfXa3I6wK75FARg==
+Content-Type: application/json;charset=utf-8
+ETag: "12-9c54c39c6ebf79bf60636d2abfe1bc85"
+
+{"sort": false, "name": "chart1", "_rev": "12-9c54c39c6ebf79bf60636d2abfe1bc85", "groupby": "building_type_id", "filter": "building_type_id <= 3 and building_type_id >= 1 and zone_id = 550", "limit": "", "jointoparcels": true, "table": "buildings2010", "orderdesc": false, "_id": "1", "port": 8765, "metric": "sum(residential_units)", "desc": "Residential Units"}
+--==b78a28820b764108839f74aa30c06c38==
+Content-ID: 2
+Content-Length: 333
+Content-MD5: iQ4/Mh7Fv9HbtoxqdUZi5w==
+Content-Type: application/json;charset=utf-8
+ETag: "5-0c3e3b4c4ccb1227b3cce92b474e4a63"
+
+{"sort": true, "name": "chart2", "_rev": "5-0c3e3b4c4ccb1227b3cce92b474e4a63", "groupby": "building_type_id", "filter": "building_type_id > 3 and zone_id = 550", "limit": "", "jointoparcels": true, "table": "buildings2010", "orderdesc": false, "_id": "2", "port": 8765, "metric": "sum(building_sqft)", "desc": "Non-residential Sqft"}
+--==b78a28820b764108839f74aa30c06c38==
+Content-ID: 3
+Content-Length: 321
+Content-MD5: SMhU4qoCUzATs7bulmmJ1A==
+Content-Type: application/json;charset=utf-8
+ETag: "5-67a9f4cbf695085afb0ca5c94a59d33e"
+
+{"sort": true, "name": "chart3", "_rev": "5-67a9f4cbf695085afb0ca5c94a59d33e", "groupby": "zone_id", "filter": "shape_area > 4000", "limit": "5", "jointoparcels": false, "table": "parcels2010_withgeography", "orderdesc": true, "_id": "3", "port": 8765, "metric": "count(shape_area)", "desc": "Zones with largest parcels"}
+--==b78a28820b764108839f74aa30c06c38==
+Content-ID: 4
+Content-Length: 301
+Content-MD5: Zvrd4qPtgXw+EFkQByjMmA==
+Content-Type: application/json;charset=utf-8
+ETag: "12-4675306d0c383ed4b85895800426f512"
+
+{"sort": false, "name": null, "_rev": "12-4675306d0c383ed4b85895800426f512", "groupby": "zgpgroup_id", "filter": "", "limit": null, "jointoparcels": false, "table": "baseline_ref_a1_buildings", "orderdesc": false, "_id": "4", "port": 8764, "metric": "residential_units.sum()", "desc": "Sum Res Units"}
+--==b78a28820b764108839f74aa30c06c38==
+Content-ID: 5
+Content-Length: 309
+Content-MD5: C/iM9/oSnkRnjKLvUvafiw==
+Content-Type: application/json;charset=utf-8
+ETag: "13-1010d38db7c92041c234b7badd25537d"
+
+{"sort": false, "name": null, "_rev": "13-1010d38db7c92041c234b7badd25537d", "groupby": "zgpgroup_id", "filter": "", "limit": null, "jointoparcels": false, "table": "baseline_ref_a1_buildings", "orderdesc": false, "_id": "5", "port": 8764, "metric": "non_residential_sqft.sum()", "desc": "Sum of Nonres Sqft"}
+--==b78a28820b764108839f74aa30c06c38==
+Content-ID: 6
+Content-Length: 300
+Content-MD5: sk/b/idQhIpmvPwRfhzOBA==
+Content-Type: application/json;charset=utf-8
+ETag: "5-a87cc7fba66e50850bed87616ec8395e"
+
+{"sort": false, "name": null, "_rev": "5-a87cc7fba66e50850bed87616ec8395e", "groupby": "zgpgroup_id", "filter": "", "limit": null, "jointoparcels": true, "table": "baseline_ref_a1_establishments", "orderdesc": false, "_id": "6", "port": 8764, "metric": "employees.sum()", "desc": "Sum of Employment"}
+--==b78a28820b764108839f74aa30c06c38==--
