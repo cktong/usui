@@ -18,9 +18,11 @@ angular.module('usuiApp')
                         console.log(JSON.stringify(req));
                         return;
                     }
+                    var inrecs = data['records'];
+                    for (var i = 0; i < inrecs.length; i++) inrecs[i][1] /= 1000.0;
                     $scope.chartData = [{
                         "key": req["name"],
-                        "values": data['records']
+                        "values": inrecs
                     }];
                     $scope.toolTipContentFunction = function() {return function(key,x,y,e,graph) {return '<p>'+y+'</p>';}}
                     $scope.$apply();

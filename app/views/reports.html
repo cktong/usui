@@ -13,18 +13,16 @@
         </div>
     </div>
     <div class="container">
-        {{#each filteredContent}}
-        <div class="row">
-            <div class="col-md-4">
-                {{view App.MyColumnView columnno=1}}
+        <div class="row" ng-repeat="chart in chartsdb.rows | filter:scenarioPort(8764)">
+            <div class="col-md-4" ng-controller="reportsCellCtrl" ng-init="init('baseline')">
+                <div ng-include src="'views/chart_display.html'"></div>
             </div>
-            <div class="col-md-4">
-                {{view App.MyColumnView columnno=2}}
+            <div class="col-md-4" ng-controller="reportsCellCtrl" ng-init="init('scen0_sched_stations_empboost')">
+                <div ng-include src="'views/chart_display.html'"></div>
             </div>
-            <div class="col-md-4">
-                {{view App.MyColumnView columnno=3}}
+            <div class="col-md-4" ng-controller="reportsCellCtrl" ng-init="init('low_impact_lowimpact_base')">
+                <div ng-include src="'views/chart_display.html'"></div>
             </div>
         </div>
-        {{/each}}
     </div>
 </div>

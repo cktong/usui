@@ -4,6 +4,7 @@ angular.module('usuiApp')
     .controller('ChartCtrl', function ($scope, $stateParams, usimpandas) {
 
         $scope.chart = $scope.chartsdb.getchartbyind($stateParams.id);
+        $scope.height = 350;
         $scope.id = $stateParams.id;
         usimpandas.query($scope.chartsdb.getchartbyind($scope.id),$scope);
 

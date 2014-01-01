@@ -1,10 +1,5 @@
 'use strict';
 
-/*
-    try charts in bamboo
-    reports page
- */
-
   angular.module('usuiApp', [
   'ngCookies',
   'ngResource',
@@ -14,7 +9,6 @@
   'nvd3ChartDirectives'
 ])
   .config(function ($stateProvider, $urlRouterProvider) {
-    //delete $httpProvider.defaults.headers.common['X-Requested-With'];
     $urlRouterProvider.otherwise('/home');
     $stateProvider
       .state('home', {
