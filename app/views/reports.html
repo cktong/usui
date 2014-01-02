@@ -13,7 +13,7 @@
         </div>
     </div>
     <div class="container">
-        <div class="row" ng-repeat="chart in chartsdb.rows | filter:scenarioPort(8764)">
+        <div class="row" ng-repeat="chart in chartsdb.rows | filter:byPort(8764)">
             <div class="col-md-4" ng-controller="reportsCellCtrl" ng-init="init('baseline')">
                 <div ng-include src="'views/chart_display.html'"></div>
             </div>

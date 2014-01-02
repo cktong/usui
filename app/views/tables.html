@@ -1,0 +1,147 @@
+<div class="main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <h4 ng-show="{{info.description}}">Table description: {{info.description}}</h4>
+                <b>ID:</b> {{info.id}}<br>
+                <b>Create Date:</b> {{info.created_at}}<br>
+                <b>Modified Date:</b> {{info.updated_at}}<br>
+                <b>Number of records:</b> {{info.num_rows}}<br>
+                <b>Number of columns:</b> {{info.num_columns}}<br>
+                <a ng-click="showDetails()">Show details</a><br>
+                <a ng-click="showSampleRows()">Show sample rows</a><br>
+                <a ng-click="showSummary()">Show summary</a><br>
+            </div>
+            <div class="col-md-9">
+                <div ng-show="showTable == 'details'" class="widget stacked widget-table action-table">
+                    <div class="widget-header">
+                        <i class="icon-th-list"></i>
+
+                        <h3>Available Table Details</h3>
+                    </div>
+                    <!-- /widget-header -->
+                    <div class="widget-content">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Label</th>
+                                <th>Olap Type</th>
+                                <th>Simple Type</th>
+                                <th>Cardinality</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="fld in info.schema">
+                                <td>{{fld.label}}</td>
+                                <td>{{fld.olap_type}}</td>
+                                <td>{{fld.simpletype}}</td>
+                                <td>{{fld.cardinality}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /widget-content -->
+                </div>
+                <!-- /widget -->
+                <div ng-show="showTable == 'sampleRows'" class="widget stacked widget-table action-table">
+                    <div class="widget-header">
+                        <i class="icon-th-list"></i>
+
+                        <h3>Sample Rows</h3>
+                    </div>
+                    <!-- /widget-header -->
+                    <div class="widget-content">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Label</th>
+                                <th ng-repeat="row in show">Rec{{$index+1}}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="fld in info.schema">
+                                <td>{{fld.label}}</td>
+                                <td ng-repeat="row in show">{{row[fld.label]}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /widget-content -->
+                </div>
+                <!-- /widget -->
+                <div ng-show="showTable == 'summary'" class="widget stacked widget-table action-table">
+                    <div class="widget-header">
+                        <i class="icon-th-list"></i>
+
+                        <h3>Table Summary for Dimensions (Categories)</h3>
+                    </div>
+                    <!-- /widget-header -->
+                    <div class="widget-content">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Label</th>
+                                <th>Count</th>
+                                <th>Freq</th>
+                                <th>Top</th>
+                                <th>Unique</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-show="fld.olap_type == 'dimension' && fld.cardinality>0" ng-repeat="fld in info.schema">
+                                <td>{{fld.label}}</td>
+                                <td>{{summary[fld.label].summary.count}}</td>
+                                <td>{{summary[fld.label].summary.freq}}</td>
+                                <td>{{summary[fld.label].summary.top}}</td>
+                                <td>{{summary[fld.label].summary.unique}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /widget-content -->
+                </div>
+                <!-- /widget -->
+                <div ng-show="showTable == 'summary'" class="widget stacked widget-table action-table">
+                    <div class="widget-header">
+                        <i class="icon-th-list"></i>
+
+                        <h3>Table Summary for Measures</h3>
+                    </div>
+                    <!-- /widget-header -->
+                    <div class="widget-content">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Label</th>
+                                <th>25%</th>
+                                <th>50%</th>
+                                <th>75%</th>
+                                <th>Count</th>
+                                <th>Max</th>
+                                <th>Min</th>
+                                <th>Mean</th>
+                                <th>Std</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-show="fld.olap_type == 'measure' && fld.cardinality>0" ng-repeat="fld in info.schema">
+                                <td>{{fld.label}}</td>
+                                <td>{{summary[fld.label].summary["25%"]|number}}</td>
+                                <td>{{summary[fld.label].summary["50%"]|number}}</td>
+                                <td>{{summary[fld.label].summary["75%"]|number}}</td>
+                                <td>{{summary[fld.label].summary.count|number}}</td>
+                                <td>{{summary[fld.label].summary.max|number}}</td>
+                                <td>{{summary[fld.label].summary.min|number}}</td>
+                                <td>{{summary[fld.label].summary.mean|number}}</td>
+                                <td>{{summary[fld.label].summary.std|number}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /widget-content -->
+                </div>
+                <!-- /widget -->
+            </div>
+        </div>
+    </div>
+</div>

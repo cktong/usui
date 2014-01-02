@@ -3,8 +3,7 @@
 angular.module('usuiApp')
   .controller('ReportsCtrl', function ($scope, chartsdb) {
     $scope.chartsdb = chartsdb;
-    $scope.scenarioPort = function(port) {
-        return function( item ) {
+    $scope.byPort = function(port) { return function( item ) {
             return item.doc.port == port;
         };
     }

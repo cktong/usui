@@ -9,6 +9,7 @@
   'nvd3ChartDirectives'
 ])
   .config(function ($stateProvider, $urlRouterProvider) {
+
     $urlRouterProvider.otherwise('/home');
     $stateProvider
       .state('home', {
@@ -30,6 +31,11 @@
         url: '/reports',
         templateUrl: 'views/reports.html',
         controller: 'ReportsCtrl'
+      })
+      .state('/tables', {
+        url: '/tables',
+        templateUrl: 'views/tables.html',
+        controller: 'TablesCtrl'
       })
   })
 
