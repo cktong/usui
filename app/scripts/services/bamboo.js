@@ -19,7 +19,7 @@ angular.module('usuiApp')
                 this.query(this.root+"datasets/"+id+"/info?callback=JSON_CALLBACK","info",$scope)
             },
             summary: function (id,$scope,limit) {
-                this.query(this.root+"datasets/"+id+"/summary?callback=JSON_CALLBACK&select=all&limit="+limit,"summary",$scope)
+                this.query(this.root+"datasets/"+id+"/summary?callback=JSON_CALLBACK&select=all","summary",$scope)
             },
             show: function (id,$scope,limit) {
                 this.query(this.root+"datasets/"+id+"?callback=JSON_CALLBACK&limit="+limit,"show",$scope)

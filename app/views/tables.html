@@ -35,7 +35,7 @@
                                 <td>{{fld.label}}</td>
                                 <td>{{fld.olap_type}}</td>
                                 <td>{{fld.simpletype}}</td>
-                                <td>{{fld.cardinality}}</td>
+                                <td align="right">{{fld.cardinality|number}}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -126,14 +126,14 @@
                             <tbody>
                             <tr ng-show="fld.olap_type == 'measure' && fld.cardinality>0" ng-repeat="fld in info.schema">
                                 <td>{{fld.label}}</td>
-                                <td>{{summary[fld.label].summary["25%"]|number}}</td>
-                                <td>{{summary[fld.label].summary["50%"]|number}}</td>
-                                <td>{{summary[fld.label].summary["75%"]|number}}</td>
-                                <td>{{summary[fld.label].summary.count|number}}</td>
-                                <td>{{summary[fld.label].summary.max|number}}</td>
-                                <td>{{summary[fld.label].summary.min|number}}</td>
-                                <td>{{summary[fld.label].summary.mean|number}}</td>
-                                <td>{{summary[fld.label].summary.std|number}}</td>
+                                <td align="right">{{summary[fld.label].summary["25%"]|number}}</td>
+                                <td align="right">{{summary[fld.label].summary["50%"]|number}}</td>
+                                <td align="right">{{summary[fld.label].summary["75%"]|number}}</td>
+                                <td align="right">{{summary[fld.label].summary.count|number}}</td>
+                                <td align="right">{{summary[fld.label].summary.max|number}}</td>
+                                <td align="right">{{summary[fld.label].summary.min|number}}</td>
+                                <td align="right">{{summary[fld.label].summary.mean|number}}</td>
+                                <td align="right">{{summary[fld.label].summary.std|number}}</td>
                             </tr>
                             </tbody>
                         </table>
