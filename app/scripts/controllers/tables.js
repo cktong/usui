@@ -2,19 +2,37 @@
 
 angular.module('usuiApp')
   .controller('TablesCtrl', function ($scope,bamboo) {
-        $scope.byPort = function(port) { return function( item ) {
-            console.log(port);
-            return item.doc.port == port;
+    $scope.activateField = function (field) {
+        $scope.activeField = {
+            label: field,
+            height: 200,
+            chartData: [{
+                "key":"key",
+                "values": [
+                    [0,$scope.summary[field].summary.min],
+                    [1,$scope.summary[field].summary["25%"]],
+                    [2,$scope.summary[field].summary["50%"]],
+                    [3,$scope.summary[field].summary["75%"]],
+                    [4,$scope.summary[field].summary.max]
+                ]
+            }]
         };
-        }
+    };
 
-    var id = 'dd02c11d14964f3482b300239c16bd2f';
-    bamboo.info(id,$scope);
-    bamboo.summary(id,$scope,10000);
-    bamboo.show(id,$scope,8);
+    var NUMSAMPLEROWS = 8;
+    bamboo.list($scope);
 
     $scope.showTable = "details";
-    $scope.showDetails = function() {$scope.showTable = "details";}
-    $scope.showSampleRows = function() {$scope.showTable = "sampleRows"}
-    $scope.showSummary = function() {$scope.showTable = "summary"}
+    $scope.showDetails = function(id) {
+        bamboo.info(id, $scope);
+        $scope.showTable = "details";
+    }
+    $scope.showSampleRows = function(id) {
+        bamboo.show(id,$scope,NUMSAMPLEROWS);
+        $scope.showTable = "sampleRows";
+    }
+    $scope.showSummary = function(id) {
+        bamboo.summary(id,$scope);
+        $scope.showTable = "summary";
+    }
   });

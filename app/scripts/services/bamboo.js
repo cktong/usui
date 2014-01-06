@@ -15,10 +15,13 @@ angular.module('usuiApp')
 
         return {
             root: "http://localhost:8080/",
+            list: function($scope) {
+                this.query(this.root+"datasets?callback=JSON_CALLBACK","list",$scope)
+            },
             info: function (id,$scope) {
                 this.query(this.root+"datasets/"+id+"/info?callback=JSON_CALLBACK","info",$scope)
             },
-            summary: function (id,$scope,limit) {
+            summary: function (id,$scope) {
                 this.query(this.root+"datasets/"+id+"/summary?callback=JSON_CALLBACK&select=all","summary",$scope)
             },
             show: function (id,$scope,limit) {
@@ -27,7 +30,7 @@ angular.module('usuiApp')
             query: function (url,attr,$scope) {
                 $http.jsonp(url,{timeout: 5000})
                     .success(function (data) {
-                        //console.log(data);
+                        console.log(data);
                         $scope.safeApply(function() {$scope[attr] = data;} );
                     })
                     .error(function (data, status) {

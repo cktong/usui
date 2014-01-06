@@ -2,15 +2,42 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3">
-                <h4 ng-show="{{info.description}}">Table description: {{info.description}}</h4>
-                <b>ID:</b> {{info.id}}<br>
-                <b>Create Date:</b> {{info.created_at}}<br>
-                <b>Modified Date:</b> {{info.updated_at}}<br>
-                <b>Number of records:</b> {{info.num_rows}}<br>
-                <b>Number of columns:</b> {{info.num_columns}}<br>
-                <a ng-click="showDetails()">Show details</a><br>
-                <a ng-click="showSampleRows()">Show sample rows</a><br>
-                <a ng-click="showSummary()">Show summary</a><br>
+
+                <div ng-repeat="info in list">
+                    <h4 ng-show="{{info.description}}">Table description: {{info.description}}</h4>
+                    <b>ID:</b> {{info.id}}<br>
+                    <!--<b>Create Date:</b> {{info.created_at}}<br>
+                    <b>Modified Date:</b> {{info.updated_at}}<br>-->
+                    <b>Number of records:</b> {{info.num_rows}}<br>
+                    <b>Number of columns:</b> {{info.num_columns}}<br>
+                    <a ng-click="showDetails(info.id)">Show details</a><br>
+                    <a ng-click="showSampleRows(info.id)">Show sample rows</a><br>
+                    <a ng-click="showSummary(info.id)">Show summary</a><br>
+                    <br>
+                </div>
+                <br>
+                <div ng-show="activeField" class="widget stacked">
+                    <div class="widget-header">
+                        <i class="icon-th-list"></i>&nbsp;&nbsp;
+                        Quntiles for {{activeField.label}}
+                    </div>
+                    <!-- /widget-header -->
+                    <div class="widget-content">
+                        <nvd3-line-chart
+                                data="activeField.chartData"
+                                id="{{activeField.label}}"
+                                height="{{activeField.height}}"
+                                margin="{top: 10, right: 10, bottom: 20 , left: 60}"
+                                interative="true"
+                                tooltips="true"
+                                showXAxis="true"
+                                xaxistickvalues="[0,1,2,3,4]"
+                                showYAxis="true">
+                            <svg></svg>
+                        </nvd3-multi-bar-chart>
+                    </div><!-- /area-chart -->
+                </div><!-- /widget-content -->
+
             </div>
             <div class="col-md-9">
                 <div ng-show="showTable == 'details'" class="widget stacked widget-table action-table">
@@ -32,7 +59,7 @@
                             </thead>
                             <tbody>
                             <tr ng-repeat="fld in info.schema">
-                                <td>{{fld.label}}</td>
+                                <td><a ng-click="activateField(fld.label)">{{fld.label}}</a></td>
                                 <td>{{fld.olap_type}}</td>
                                 <td>{{fld.simpletype}}</td>
                                 <td align="right">{{fld.cardinality|number}}</td>
@@ -89,7 +116,7 @@
                             </thead>
                             <tbody>
                             <tr ng-show="fld.olap_type == 'dimension' && fld.cardinality>0" ng-repeat="fld in info.schema">
-                                <td>{{fld.label}}</td>
+                                <td><a ng-click="activateField(fld.label)">{{fld.label}}</a></td>
                                 <td>{{summary[fld.label].summary.count}}</td>
                                 <td>{{summary[fld.label].summary.freq}}</td>
                                 <td>{{summary[fld.label].summary.top}}</td>
@@ -113,25 +140,25 @@
                             <thead>
                             <tr>
                                 <th>Label</th>
+                                <th>Min</th>
                                 <th>25%</th>
                                 <th>50%</th>
                                 <th>75%</th>
-                                <th>Count</th>
                                 <th>Max</th>
-                                <th>Min</th>
+                                <th>Count</th>
                                 <th>Mean</th>
                                 <th>Std</th>
                             </tr>
                             </thead>
                             <tbody>
                             <tr ng-show="fld.olap_type == 'measure' && fld.cardinality>0" ng-repeat="fld in info.schema">
-                                <td>{{fld.label}}</td>
+                                <td><a ng-click="activateField(fld.label)">{{fld.label}}</a></td>
+                                <td align="right">{{summary[fld.label].summary.min|number}}</td>
                                 <td align="right">{{summary[fld.label].summary["25%"]|number}}</td>
                                 <td align="right">{{summary[fld.label].summary["50%"]|number}}</td>
                                 <td align="right">{{summary[fld.label].summary["75%"]|number}}</td>
-                                <td align="right">{{summary[fld.label].summary.count|number}}</td>
                                 <td align="right">{{summary[fld.label].summary.max|number}}</td>
-                                <td align="right">{{summary[fld.label].summary.min|number}}</td>
+                                <td align="right">{{summary[fld.label].summary.count|number}}</td>
                                 <td align="right">{{summary[fld.label].summary.mean|number}}</td>
                                 <td align="right">{{summary[fld.label].summary.std|number}}</td>
                             </tr>

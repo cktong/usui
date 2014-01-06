@@ -6,7 +6,7 @@ angular.module('usuiApp')
             query: function (req,$scope) {
             if(req === undefined) return;
             var port = req['port'];
-
+            console.log(JSON.stringify(req));
             $.ajax({
                 url: "http://paris.urbansim.org:"+port+"/query?callback=?&json=" + JSON.stringify(req),
                 dataType: "jsonp",
