@@ -5,21 +5,16 @@
 
                 <div ng-repeat="info in list">
                     <h4 ng-show="{{info.description}}">Table description: {{info.description}}</h4>
-                    <b>ID:</b> {{info.id}}<br>
-                    <!--<b>Create Date:</b> {{info.created_at}}<br>
-                    <b>Modified Date:</b> {{info.updated_at}}<br>-->
-                    <b>Number of records:</b> {{info.num_rows}}<br>
-                    <b>Number of columns:</b> {{info.num_columns}}<br>
-                    <a ng-click="showDetails(info.id)">Show details</a><br>
-                    <a ng-click="showSampleRows(info.id)">Show sample rows</a><br>
-                    <a ng-click="showSummary(info.id)">Show summary</a><br>
-                    <br>
+                    <span ng-class="'{{info.id}}' == activeID ? '' : 'text-muted'">ID: {{info.id}}</span><br>
+                    <a class="text-muted" ng-click="showDetails(info.id)">Details</a> |
+                    <a class="text-muted" ng-click="showSampleRows(info.id)">Sample rows</a> |
+                    <a class="text-muted" ng-click="showSummary(info.id)">Summary</a><br>
                 </div>
                 <br>
                 <div ng-show="activeField" class="widget stacked">
                     <div class="widget-header">
                         <i class="icon-th-list"></i>&nbsp;&nbsp;
-                        Quntiles for {{activeField.label}}
+                        Quantiles for {{activeField.label}}
                     </div>
                     <!-- /widget-header -->
                     <div class="widget-content">
@@ -40,11 +35,49 @@
 
             </div>
             <div class="col-md-9">
+                <div ng-show="showTable == 'list'" class="widget stacked widget-table action-table">
+                    <div class="widget-header">
+                        <i class="icon-th-list"></i>
+
+                        <h3>Available Tables</h3>
+                    </div>
+                    <!-- /widget-header -->
+                    <div class="widget-content">
+                        <table class="table table-striped table-bordered">
+                            <thead>
+                            <tr>
+                                <th ng-show="{{info.description}}">Description</th>
+                                <th>ID</th>
+                                <th>Created</th>
+                                <th>Updated</th>
+                                <th>Rows</th>
+                                <th>Cols</th>
+                                <th></th><th></th><th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="info in list">
+                                <td ng-show="{{info.description}}">{{info.description}}</td>
+                                <td>{{info.id}}</td>
+                                <td>{{info.created_at}}</td>
+                                <td>{{info.updated_at}}</td>
+                                <td>{{info.num_rows}}</td>
+                                <td>{{info.num_columns}}</td>
+                                <td><a ng-click="showDetails(info.id)">Details</a><br></td>
+                                <td><a ng-click="showSampleRows(info.id)">Sample</a><br></td>
+                                <td><a ng-click="showSummary(info.id)">Summary</a><br></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- /widget-content -->
+                </div>
+                <!-- /widget -->
                 <div ng-show="showTable == 'details'" class="widget stacked widget-table action-table">
                     <div class="widget-header">
                         <i class="icon-th-list"></i>
 
-                        <h3>Available Table Details</h3>
+                        <h3>Available Table Details - {{info.id}}</h3>
                     </div>
                     <!-- /widget-header -->
                     <div class="widget-content">
@@ -59,7 +92,7 @@
                             </thead>
                             <tbody>
                             <tr ng-repeat="fld in info.schema">
-                                <td><a ng-click="activateField(fld.label)">{{fld.label}}</a></td>
+                                <td>{{fld.label}}</td>
                                 <td>{{fld.olap_type}}</td>
                                 <td>{{fld.simpletype}}</td>
                                 <td align="right">{{fld.cardinality|number}}</td>
@@ -73,11 +106,13 @@
                 <div ng-show="showTable == 'sampleRows'" class="widget stacked widget-table action-table">
                     <div class="widget-header">
                         <i class="icon-th-list"></i>
-
-                        <h3>Sample Rows</h3>
+                        <h3>Sample Rows - {{info.id}}</h3>
                     </div>
                     <!-- /widget-header -->
                     <div class="widget-content">
+                        <form ng-submit="showSampleRows(info.id,sorted)">
+                        <input class="form-control" ng-model='filterQuery'>
+                        </form>
                         <table class="table table-striped table-bordered">
                             <thead>
                             <tr>
@@ -87,7 +122,10 @@
                             </thead>
                             <tbody>
                             <tr ng-repeat="fld in info.schema">
-                                <td>{{fld.label}}</td>
+                                <td ng-click="showSampleRows(info.id,fld.label)">
+                                    <i class="icon-sort"></i>
+                                    {{fld.label}}
+                                </td>
                                 <td ng-repeat="row in show">{{row[fld.label]}}</td>
                             </tr>
                             </tbody>
@@ -100,7 +138,7 @@
                     <div class="widget-header">
                         <i class="icon-th-list"></i>
 
-                        <h3>Table Summary for Dimensions (Categories)</h3>
+                        <h3>Table Summary for Dimensions (Categories) - {{info.id}}</h3>
                     </div>
                     <!-- /widget-header -->
                     <div class="widget-content">

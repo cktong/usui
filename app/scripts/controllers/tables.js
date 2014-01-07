@@ -22,16 +22,30 @@ angular.module('usuiApp')
     var NUMSAMPLEROWS = 8;
     bamboo.list($scope);
 
-    $scope.showTable = "details";
+    function setid($scope,id) {
+        $scope.activeID = id;
+        $scope.info = $.grep($scope.list, function( a ) { return a.id == id; })[0];
+    }
+
+    $scope.showTable = "list";
     $scope.showDetails = function(id) {
-        bamboo.info(id, $scope);
+        setid($scope,id);
         $scope.showTable = "details";
     }
-    $scope.showSampleRows = function(id) {
-        bamboo.show(id,$scope,NUMSAMPLEROWS);
+    $scope.showSampleRows = function(id,orderby) {
+        setid($scope,id);
+
+        var descending = ($scope.sorted && $scope.sorted == orderby) ? !$scope.descending : false;
+        $scope.sorted = orderby;
+        $scope.descending = descending;
+
+        //{"$and":[{"_node_id":{"$lt":1000}},{"_node_id":{"$gt":600}}]}
+
+        bamboo.show(id,$scope,NUMSAMPLEROWS,orderby,descending,$scope.filterQuery);
         $scope.showTable = "sampleRows";
     }
     $scope.showSummary = function(id) {
+        setid($scope,id);
         bamboo.summary(id,$scope);
         $scope.showTable = "summary";
     }

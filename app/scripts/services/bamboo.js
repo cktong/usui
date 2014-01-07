@@ -24,10 +24,14 @@ angular.module('usuiApp')
             summary: function (id,$scope) {
                 this.query(this.root+"datasets/"+id+"/summary?callback=JSON_CALLBACK&select=all","summary",$scope)
             },
-            show: function (id,$scope,limit) {
-                this.query(this.root+"datasets/"+id+"?callback=JSON_CALLBACK&limit="+limit,"show",$scope)
+            show: function (id,$scope,limit,orderby,descending,filter) {
+                if(descending) orderby = "-"+orderby;
+                orderby = orderby === undefined ? "" : "&order_by="+orderby;
+                filter = filter === undefined ? "" : "&query="+filter;
+                this.query(this.root+"datasets/"+id+"?callback=JSON_CALLBACK&limit="+limit+orderby+filter,"show",$scope)
             },
             query: function (url,attr,$scope) {
+                console.log(url);
                 $http.jsonp(url,{timeout: 5000})
                     .success(function (data) {
                         console.log(data);
