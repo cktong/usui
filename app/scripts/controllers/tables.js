@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('usuiApp')
-  .controller('TablesCtrl', function ($scope,bamboo) {
+  .controller('TablesCtrl', function ($scope,bamboo,usimpandas) {
     $scope.activateField = function (field) {
         $scope.activeField = {
             label: field,
@@ -19,34 +19,44 @@ angular.module('usuiApp')
         };
     };
 
-    var NUMSAMPLEROWS = 8;
+    var bamboo = usimpandas;
+    var NUMSAMPLEROWS = 10;
+    $scope.descending = false;
+    $scope.filterQuery = '';
     bamboo.list($scope);
 
-    function setid($scope,id) {
-        $scope.activeID = id;
-        $scope.info = $.grep($scope.list, function( a ) { return a.id == id; })[0];
-    }
+    $scope.setActiveTable = function(tbl) {
+        $scope.activeID = tbl;
+        $scope.showSampleRows(tbl);
+        $scope.showSummary(tbl);
+    };
 
-    $scope.showTable = "list";
-    $scope.showDetails = function(id) {
-        setid($scope,id);
-        $scope.showTable = "details";
+    $scope.addFldToQuery = function(fld) {
+        $scope.filterQuery += "x['" + fld + "']"
+        $('#filterQueryInput').focus();
     }
-    $scope.showSampleRows = function(id,orderby) {
-        setid($scope,id);
+    $scope.addNumToQuery = function(fld) {
+        $scope.filterQuery += fld
+        $('#filterQueryInput').focus();
+    }
+    $scope.addStrToQuery = function(fld) {
+        $scope.filterQuery += "'" + fld + "'"
+        $('#filterQueryInput').focus();
+    }
+    $scope.isNumber = function (value) {
+        return angular.isNumber(value);
+    };
 
-        var descending = ($scope.sorted && $scope.sorted == orderby) ? !$scope.descending : false;
+    $scope.showSampleRows = function(id,orderby,descending) {
         $scope.sorted = orderby;
         $scope.descending = descending;
 
-        //{"$and":[{"_node_id":{"$lt":1000}},{"_node_id":{"$gt":600}}]}
-
-        bamboo.show(id,$scope,NUMSAMPLEROWS,orderby,descending,$scope.filterQuery);
-        $scope.showTable = "sampleRows";
+        bamboo.show(id,$scope,NUMSAMPLEROWS,orderby,descending,$scope.filterQuery,$scope.groupBy,$scope.metric);
+        $scope.sampleRowsON = true;
     }
     $scope.showSummary = function(id) {
-        setid($scope,id);
         bamboo.summary(id,$scope);
-        $scope.showTable = "summary";
+        $scope.summaryON = true;
     }
+    $scope.setActiveTable("homesales");
   });

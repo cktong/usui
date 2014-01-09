@@ -46,12 +46,17 @@
 <![endif]-->
 
 <!-- Add your site or application content here -->
-
 <div ng-include src="'navbar.html'"></div>
 
 <div ng-include src="'subnavbar.html'" ng-controller="navbarCtrl"></div>
 
+<div class="main">
+    <div class="container">
+
 <div ui-view=""></div>
+
+    </div>
+</div>
 
 <div ng-include src="'footer.html'"></div>
 

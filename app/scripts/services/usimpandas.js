@@ -1,37 +1,48 @@
 'use strict';
 
 angular.module('usuiApp')
-    .service('usimpandas', function Usimpandas() {
-        return {
-            query: function (req,$scope) {
-            if(req === undefined) return;
-            var port = req['port'];
-            console.log(JSON.stringify(req));
-            $.ajax({
-                url: "http://paris.urbansim.org:"+port+"/query?callback=?&json=" + JSON.stringify(req),
-                dataType: "jsonp",
-                contentType: "application/json;charset=utf-8",
-                timeout: 5000,
-                success: function (data) {
-                    if ('error' in data) {
-                        growl("error","Chart query failed",data['error'],true);
-                        console.log(JSON.stringify(req));
-                        return;
-                    }
-                    var inrecs = data['records'];
-                    for (var i = 0; i < inrecs.length; i++) inrecs[i][1] /= 1000.0;
-                    $scope.chartData = [{
-                        "key": req["name"],
-                        "values": inrecs
-                    }];
-                    $scope.toolTipContentFunction = function() {return function(key,x,y,e,graph) {return '<p>'+y+'</p>';}}
-                    $scope.$apply();
-                },
-                error: function (data, status) {
-                    growl("error","Ajax query failed",status);
-                    console.log(JSON.stringify(req));
+    .service('usimpandas', function ($http, $rootScope) {
+        $rootScope.safeApply = function(fn) {
+            var phase = this.$root.$$phase;
+            if(phase == '$apply' || phase == '$digest') {
+                if(fn && (typeof(fn) === 'function')) {
+                    fn();
                 }
-            });
+            } else {
+                this.$apply(fn);
+            }
+        };
+
+        return {
+            root: "http://localhost:8765/",
+            list: function($scope) {
+                this.query(this.root+"datasets?callback=JSON_CALLBACK","list",$scope)
+            },
+            info: function (id,$scope) {
+                this.query(this.root+"datasets/"+id+"/info?callback=JSON_CALLBACK","info",$scope)
+            },
+            summary: function (id,$scope) {
+                this.query(this.root+"datasets/"+id+"/summary?callback=JSON_CALLBACK&select=all","summary",$scope)
+            },
+            show: function (id,$scope,limit,orderby,descending,filter,groupby,metric) {
+                if(descending) orderby = "-"+orderby;
+                orderby = orderby === undefined ? "" : "&order_by="+orderby;
+                filter = filter === undefined ? "" : "&query="+filter;
+                groupby = groupby === undefined || metric === undefined ? "" : "&groupby="+groupby;
+                metric = groupby === undefined || metric === undefined ? "" : "&metric="+metric;
+                this.query(this.root+"datasets/"+id+"?callback=JSON_CALLBACK&limit="+limit+orderby+filter+groupby+metric,"show",$scope)
+            },
+            query: function (url,attr,$scope) {
+                console.log(url);
+                $http.jsonp(url,{timeout: 5000})
+                    .success(function (data) {
+                        console.log(data);
+                        $scope.safeApply(function() {$scope[attr] = data;} );
+                    })
+                    .error(function (data, status) {
+                        growl("error","Koala query failed",status);
+                    });
+
+            }
         }
-    }
-});
+    });
