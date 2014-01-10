@@ -25,6 +25,16 @@ angular.module('usuiApp')
     $scope.filterQuery = '';
     bamboo.list($scope);
 
+    $scope.merge_type = 'inner';
+    $scope.$watch('estimation_table', function() {
+        console.log($scope.estimation_table);
+        if($scope.estimation_table != undefined) bamboo.columns($scope.estimation_table,$scope,"left_fields");
+    });
+    $scope.$watch('estimation_merge_table', function() {
+        console.log($scope.estimation_merge_table);
+        if($scope.estimation_merge_table != undefined) bamboo.columns($scope.estimation_merge_table,$scope,"right_fields");
+    });
+
     $scope.setActiveTable = function(tbl) {
         $scope.activeID = tbl;
         $scope.showSampleRows(tbl);
@@ -47,6 +57,9 @@ angular.module('usuiApp')
         return angular.isNumber(value);
     };
 
+    $scope.mergeTables = function () {
+        bamboo.merge($scope.estimation_table,$scope,$scope.estimation_merge_table,$scope.left_join_fld,$scope.right_join_fld,$scope.merge_type)
+    }
     $scope.showSampleRows = function(id,orderby,descending) {
         $scope.sorted = orderby;
         $scope.descending = descending;

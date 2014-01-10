@@ -1,5 +1,59 @@
 <div class="row">
     <div class="col-md-12" align="center">
+        <table>
+            <tr>
+                <td>
+                    Select table:
+                </td>
+                <td>
+                    <select class="form-control" ng-model="estimation_table" ng-options="id for id in list"></select>
+                </td>
+            </tr>
+            <tr ng-show="estimation_table">
+                <td>
+                    Select merge table:
+                </td>
+                <td>
+                    <select class="form-control" ng-model="estimation_merge_table" ng-options="id for id in list"></select>
+                </td>
+            </tr>
+            <tr ng-show="estimation_table">
+                <td>Select left join field:</td>
+                <td>
+                    <select class="form-control" ng-model="left_join_fld" ng-options="fld for fld in left_fields">
+                        <option value="">use index</option>
+                    </select>
+                </td>
+            </tr>
+            <tr ng-show="estimation_merge_table">
+                <td>Select right join field:</td>
+                <td>
+                    <select class="form-control" ng-model="right_join_fld" ng-options="fld for fld in right_fields">
+                        <option value="">use index</option>
+                    </select>
+                </td>
+            </tr>
+            <tr ng-show="estimation_table">
+                <td>Select join type:</td>
+                <td>
+                    <select class="form-control" ng-model="merge_type" ng-options="typ for typ in ['left','right','outer','inner']"></select>
+                </td>
+            </tr>
+            <tr ng-show="estimation_table">
+                <td></td>
+                <td>
+                    <button ng-click="mergeTables()" type="button" class="btn btn-default btn-sm">
+                        Merge tables
+                     </button>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+    <br>
+
+
+    <div class="col-md-12" align="center">
         <span ng-click="setActiveTable(id)" ng-repeat="id in list" ng-class="activeID === undefined || '{{id}}' == activeID ? '' : 'text-muted'">{{id|uppercase}}<span ng-hide="$last"> | </span></span>
 
         <div ng-show="activeField" class="widget stacked">
@@ -58,8 +112,14 @@
                 <table class="table table-striped table-bordered">
                     <thead>
                     <tr>
-                        <th ng-click="addFldToQuery(fld)" ng-repeat="fld in show.labels">
-                            <div>{{fld}}</div>
+                        <th ng-repeat="fld in show.labels">
+                            <div style="white-space:nowrap;">
+                                <span ng-click="showSampleRows(activeID,fld,fld==sorted?!descending:descending)" ng-if="sorted === undefined"><i class="icon-sort"></i></span>
+                                <span ng-click="showSampleRows(activeID,fld,fld==sorted?!descending:descending)" ng-if="sorted == fld && !descending"><i class="icon-sort-up"></i></span>
+                                <span ng-click="showSampleRows(activeID,fld,fld==sorted?!descending:descending)" ng-if="sorted == fld && descending"><i class="icon-sort-down"></i></span>
+                                <span ng-click="showSampleRows(activeID,fld,fld==sorted?!descending:descending)" ng-class="sorted === undefined || fld == sorted ? '' : 'text-muted'">{{fld}}</span>
+                                <span><i ng-click="addFldToQuery(fld)" class="icon-level-up"></i></span>
+                            </div>
                         </th>
                     </tr>
                     </thead>
@@ -68,16 +128,6 @@
                         <td ng-hide="fld == 'labels'" ng-repeat="fld in rec track by $index">
                             <div ng-click="addNumToQuery(fld)" ng-if="isNumber(fld)">{{fld|number}}</div>
                             <div ng-click="addStrToQuery(fld)" ng-if="!isNumber(fld)">{{fld}}</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td ng-repeat="fld in show.labels">
-                            <div ng-click="showSampleRows(activeID,fld,fld==sorted?!descending:descending)" style="white-space:nowrap;">
-                                <span ng-if="sorted === undefined"><i class="icon-sort"></i></span>
-                                <span ng-if="sorted == fld && !descending"><i class="icon-sort-up"></i></span>
-                                <span ng-if="sorted == fld && descending"><i class="icon-sort-down"></i></span>
-                                <span ng-class="sorted === undefined || fld == sorted ? '' : 'text-muted'">{{fld}}</span>
-                            </div>
                         </td>
                     </tr>
                     </tbody>
@@ -111,15 +161,15 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr><td>Type</td><td align="right" ng-repeat="(fld,obj) in summary">{{obj.dtype}}</td></tr>
-                    <tr><td>Count</td><td align="right" ng-repeat="(fld,obj) in summary">{{obj.summary.count|number}}</td></tr>
-                    <tr><td>Min</td><td align="right" ng-repeat="(fld,obj) in summary">{{obj.summary.min|number}}</td></tr>
-                    <tr><td>25%</td><td align="right" ng-repeat="(fld,obj) in summary">{{obj.summary["25%"]|number}}</td></tr>
-                    <tr><td>50%</td><td align="right" ng-repeat="(fld,obj) in summary">{{obj.summary["50%"]|number}}</td></tr>
-                    <tr><td>75%</td><td align="right" ng-repeat="(fld,obj) in summary">{{obj.summary["75%"]|number}}</td></tr>
-                    <tr><td>Max</td><td align="right" ng-repeat="(fld,obj) in summary">{{obj.summary.max|number}}</td></tr>
-                    <tr><td>Mean</td><td align="right" ng-repeat="(fld,obj) in summary">{{obj.summary.mean|number}}</td></tr>
-                    <tr><td>Std</td><td align="right" ng-repeat="(fld,obj) in summary">{{obj.summary.std|number}}</td></tr>
+                    <tr><td>Type</td><td align="right" ng-repeat="fld in show.labels">{{summary[fld].dtype}}</td></tr>
+                    <tr><td>Count</td><td align="right" ng-repeat="fld in show.labels">{{summary[fld].summary.count|number}}</td></tr>
+                    <tr><td>Min</td><td align="right" ng-repeat="fld in show.labels">{{summary[fld].summary.min|number}}</td></tr>
+                    <tr><td>25%</td><td align="right" ng-repeat="fld in show.labels">{{summary[fld].summary["25%"]|number}}</td></tr>
+                    <tr><td>50%</td><td align="right" ng-repeat="fld in show.labels">{{summary[fld].summary["50%"]|number}}</td></tr>
+                    <tr><td>75%</td><td align="right" ng-repeat="fld in show.labels">{{summary[fld].summary["75%"]|number}}</td></tr>
+                    <tr><td>Max</td><td align="right" ng-repeat="fld in show.labels">{{summary[fld].summary.max|number}}</td></tr>
+                    <tr><td>Mean</td><td align="right" ng-repeat="fld in show.labels">{{summary[fld].summary.mean|number}}</td></tr>
+                    <tr><td>Std</td><td align="right" ng-repeat="fld in show.labels">{{summary[fld].summary.std|number}}</td></tr>
                     </tbody>
                 </table>
             </div>
