@@ -29,15 +29,22 @@ angular.module('usuiApp')
     $scope.dep_var = "Sale_price_flt";
     $scope.dep_var_transform = "np.log1p";
     $scope.output_transform = "np.exp";
-
     $scope.merge_type = 'inner';
+
     $scope.$watch('estimation_table', function() {
-        console.log($scope.estimation_table);
         if($scope.estimation_table != undefined) bamboo.columns($scope.estimation_table,$scope,"left_fields");
     });
     $scope.$watch('estimation_merge_table', function() {
-        console.log($scope.estimation_merge_table);
         if($scope.estimation_merge_table != undefined) bamboo.columns($scope.estimation_merge_table,$scope,"right_fields");
+    });
+    $scope.$watch('show', function() {
+        if($scope.show != undefined) {
+            $scope.safeApply(function() {
+                $scope.pages = $scope.tableParams.reloadPages();
+                console.log("herenow");
+                console.log($scope.pages);
+            });
+        }
     });
 
     $scope.setActiveTable = function(tbl) {
@@ -72,11 +79,12 @@ angular.module('usuiApp')
     $scope.mergeTables = function () {
         bamboo.merge($scope.estimation_table,$scope,$scope.estimation_merge_table,$scope.left_join_fld,$scope.right_join_fld,$scope.merge_type)
     }
-    $scope.showSampleRows = function(id,orderby,descending) {
+    $scope.showSampleRows = function(id,orderby,descending,count) {
         $scope.sorted = orderby;
         $scope.descending = descending;
+        count = count === undefined ? NUMSAMPLEROWS : count;
 
-        bamboo.show(id,$scope,NUMSAMPLEROWS,orderby,descending,$scope.filterQuery,$scope.groupBy,$scope.metric);
+        bamboo.show(id,$scope,count,orderby,descending,$scope.filterQuery,$scope.groupBy,$scope.metric);
         $scope.sampleRowsON = true;
     }
     $scope.showSummary = function(id) {
@@ -84,4 +92,21 @@ angular.module('usuiApp')
         $scope.summaryON = true;
     }
     $scope.setActiveTable("homesales");
-  });
+
+    $scope.tableParams = new ngTableParams({
+        page: 1,             // show first page
+        count: NUMSAMPLEROWS // count per page
+    }, {
+        $scope: $scope,
+        total: 1000, // length of data
+        getData: function ($defer, params) {
+            console.log("running");
+            var k = Object.keys(params.sorting());
+            if (k.length) {
+                $scope.showSampleRows($scope.activeID, k[0], params.sorting()[k] == 'desc', params.count());
+            } else {
+                $scope.showSampleRows($scope.activeID, undefined, undefined, params.count());
+            }
+        }
+    });
+});

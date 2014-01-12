@@ -38,7 +38,7 @@ angular.module('usuiApp')
                 req["dep_var"] = dep_var;
                 req["dep_var_transform"] = dep_var_transform;
                 req["output_transform"] = output_transform;
-                req["ind_vars"] = selectedFields;
+                req["ind_vars"] = $.grep(Object.keys(selectedFields),function (v) {return selectedFields[v];});
                 req["table"] = "dset.fetch('"+table+"')";
                 req["model"] = model;
 
