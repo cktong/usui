@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('usuiApp')
-  .controller('TablesCtrl', function ($scope,bamboo,usimpandas) {
+  .controller('TablesCtrl', function ($scope,bamboo,usimpandas,ngTableParams) {
     $scope.activateField = function (field) {
         $scope.activeField = {
             label: field,
@@ -24,6 +24,11 @@ angular.module('usuiApp')
     $scope.descending = false;
     $scope.filterQuery = '';
     bamboo.list($scope);
+    $scope.selectedFields = {};
+    $scope.transformations = ['np.log1p','np.exp'];
+    $scope.dep_var = "Sale_price_flt";
+    $scope.dep_var_transform = "np.log1p";
+    $scope.output_transform = "np.exp";
 
     $scope.merge_type = 'inner';
     $scope.$watch('estimation_table', function() {
@@ -57,6 +62,13 @@ angular.module('usuiApp')
         return angular.isNumber(value);
     };
 
+    $scope.fetchData = function () {
+        bamboo.download($scope,$scope.urlToFetch,$scope.urlToFetchOutName)
+    }
+    $scope.execModel = function () {
+        bamboo.model($scope,$scope.selectedFields,$scope.activeID,"hedonicmodel",$scope.dep_var,$scope.dep_var_transform,$scope.output_transform);
+        $scope.modelResultsON = true;
+    }
     $scope.mergeTables = function () {
         bamboo.merge($scope.estimation_table,$scope,$scope.estimation_merge_table,$scope.left_join_fld,$scope.right_join_fld,$scope.merge_type)
     }

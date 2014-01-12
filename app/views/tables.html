@@ -1,5 +1,16 @@
 <div class="row">
-    <div class="col-md-12" align="center">
+
+    <!-- upload data -->
+    <div class="col-md-6" align="center">
+        <input class="form-control" ng-model='urlToFetch' placeholder="Enter url to fetch">
+        <input class="form-control" ng-model='urlToFetchOutName' placeholder="Enter name to store">
+        <button ng-click="fetchData()" type="button" class="btn btn-default btn-sm">
+            Fetch csv file
+        </button>
+    </div>
+
+    <!-- merge data -->
+    <div class="col-md-6" align="center">
         <table>
             <tr>
                 <td>
@@ -50,45 +61,55 @@
         </table>
     </div>
 </div>
-    <br>
 
 
+
+<hr>
+<div ng-show="activeField" class="widget stacked">
+    <div class="widget-header">
+        <i class="icon-th-list"></i>&nbsp;&nbsp;
+        Quantiles for {{activeField.label}}
+    </div>
+    <!-- /widget-header -->
+    <div class="widget-content">
+        <nvd3-line-chart
+                data="activeField.chartData"
+                id="{{activeField.label}}"
+                height="{{activeField.height}}"
+                margin="{top: 10, right: 10, bottom: 20 , left: 60}"
+                interative="true"
+                tooltips="true"
+                showXAxis="true"
+                xaxistickvalues="[0,1,2,3,4]"
+                showYAxis="true">
+            <svg></svg>
+            </nvd3-multi-bar-chart>
+    </div><!-- /area-chart -->
+</div><!-- /widget-content -->
+
+
+<!-- nvd3 graphs, put in modal -->
+<div class="row">
     <div class="col-md-12" align="center">
         <span ng-click="setActiveTable(id)" ng-repeat="id in list" ng-class="activeID === undefined || '{{id}}' == activeID ? '' : 'text-muted'">{{id|uppercase}}<span ng-hide="$last"> | </span></span>
-
-        <div ng-show="activeField" class="widget stacked">
-            <div class="widget-header">
-                <i class="icon-th-list"></i>&nbsp;&nbsp;
-                Quantiles for {{activeField.label}}
-            </div>
-            <!-- /widget-header -->
-            <div class="widget-content">
-                <nvd3-line-chart
-                        data="activeField.chartData"
-                        id="{{activeField.label}}"
-                        height="{{activeField.height}}"
-                        margin="{top: 10, right: 10, bottom: 20 , left: 60}"
-                        interative="true"
-                        tooltips="true"
-                        showXAxis="true"
-                        xaxistickvalues="[0,1,2,3,4]"
-                        showYAxis="true">
-                    <svg></svg>
-                    </nvd3-multi-bar-chart>
-            </div><!-- /area-chart -->
-        </div><!-- /widget-content -->
     </div>
 </div>
-<br>
+
+
+<!-- sample recs -->
 <div class="row">
     <div class="col-md-12">
-        <div ng-show="sampleRowsON" class="widget stacked widget-table action-table">
-            <div class="widget-header">
-                <i class="icon-th-list"></i>
-                <h3>Sample Rows - {{activeID}}</h3>
+        <div ng-show="sampleRowsON" class="box" ng-init="showRows=false">
+            <div class="box-header" data-original-title>
+                <h2><i class="fa fa-bar-chart-o"></i><span class="break"></span>Sample Rows - {{activeID|uppercase}}</h2>
+                <div class="box-icon">
+                    <a ng-click="showRows = !showRows" href="#/tables" class="btn-minimize"><i class="fa" ng-class="showRows?'fa-chevron-up':'fa-chevron-down'"></i></a>
+                    <a ng-click="sampleRowsON=false" class="btn-close"><i class="fa fa-times"></i></a>
+                </div>
             </div>
 
-            <div class="widget-content">
+            <!-- filter and group by -->
+            <div ng-show="showRows" class="box-content">
                 <div style="white-space:nowrap;">
                     <form class="form-inline" ng-submit="showSampleRows(activeID,sorted,descending)">
                         <div class="form-group" style="border: 0px; padding: 0px; margin: 0px; width: 59%;">
@@ -108,51 +129,135 @@
                 </div>
             </div>
 
-            <div class="widget-content">
-                <table class="table table-striped table-bordered">
+            <div class="box-content">
+                <table class="table table-striped table-bordered bootstrap-datatable datatable">
                     <thead>
                     <tr>
-                        <th ng-repeat="fld in show.labels">
-                            <div style="white-space:nowrap;">
-                                <span ng-click="showSampleRows(activeID,fld,fld==sorted?!descending:descending)" ng-if="sorted === undefined"><i class="icon-sort"></i></span>
-                                <span ng-click="showSampleRows(activeID,fld,fld==sorted?!descending:descending)" ng-if="sorted == fld && !descending"><i class="icon-sort-up"></i></span>
-                                <span ng-click="showSampleRows(activeID,fld,fld==sorted?!descending:descending)" ng-if="sorted == fld && descending"><i class="icon-sort-down"></i></span>
-                                <span ng-click="showSampleRows(activeID,fld,fld==sorted?!descending:descending)" ng-class="sorted === undefined || fld == sorted ? '' : 'text-muted'">{{fld}}</span>
-                                <span><i ng-click="addFldToQuery(fld)" class="icon-level-up"></i></span>
-                            </div>
+                        <th ng-class="sorting" role="columnheader" ng-repeat="fld in show.labels">
+                              <div>
+                                  {{fld}}
+<!--                              <span ng-click="showSampleRows(activeID,fld,fld==sorted?!descending:descending)" ng-if="sorted === undefined"><i class="icon-sort"></i></span>
+                                  <span ng-click="showSampleRows(activeID,fld,fld==sorted?!descending:descending)" ng-if="sorted == fld && !descending"><i class="icon-sort-up"></i></span>
+                                  <span ng-click="showSampleRows(activeID,fld,fld==sorted?!descending:descending)" ng-if="sorted == fld && descending"><i class="icon-sort-down"></i></span>
+
+                                  <span ng-click="showSampleRows(activeID,fld,fld==sorted?!descending:descending)" ng-class="sorted === undefined || fld == sorted ? '' : 'text-muted'" style="word-break: break-all">{{fld}}</span>
+                                  <span><i ng-click="addFldToQuery(fld)" class="icon-level-up"></i></span>-->
+                              </div>
                         </th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-repeat="rec in show.recs">
+                    <tr ng-show="showRows" ng-repeat="rec in show.recs">
                         <td ng-hide="fld == 'labels'" ng-repeat="fld in rec track by $index">
                             <div ng-click="addNumToQuery(fld)" ng-if="isNumber(fld)">{{fld|number}}</div>
                             <div ng-click="addStrToQuery(fld)" ng-if="!isNumber(fld)">{{fld}}</div>
                         </td>
                     </tr>
+                    <tr>
+                        <td ng-repeat="fld in show.labels">
+                            <input type="checkbox" ng-model="selectedFields[fld]" />
+                        </td>
+                    </tr>
                     </tbody>
                 </table>
             </div>
-            <!-- /widget-content -->
         </div>
-        <!-- /widget -->
-        <div ng-show="summaryON" class="widget stacked widget-table action-table">
-            <div class="widget-header">
-                <i class="icon-th-list"></i>
+    </div>
+</div>
 
-                <h3>Table Summary for Dimensions - {{id}}</h3>
-            </div>
-            <!-- /widget-header -->
-        </div>
-        <!-- /widget -->
-        <div ng-show="summaryON" class="widget stacked widget-table action-table">
-            <div class="widget-header">
-                <i class="icon-th-list"></i>
+<br>
+<div class="row">
+        <div class="col-md-12" align="center">
+            <table>
+                <tr>
+                    <td>
+                        <select class="form-control" ng-model="dep_var" ng-options="fld for fld in show.labels">
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-control" ng-model="dep_var_transform" ng-options="trans for trans in transformations">
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-control" ng-model="output_transform" ng-options="trans for trans in transformations">
+                        </select>
+                    </td>
+                    <td>
+                        <button ng-click="execModel()" type="button" class="btn btn-default btn-md">
+                            Estimate Model
+                        </button>
+                    </td>
+                </tr>
+            </table>
+    </div>
+</div>
 
-                <h3>Table Summary for Measures - {{id}}</h3>
+
+
+
+<div class="row">
+     <div class="col-md-offset-2 col-lg-8">
+         <div ng-show="model_results&&modelResultsON" class="box" ng-init="showModelResults=true">
+             <div class="box-header" data-original-title>
+                 <h2><i class="fa fa-bar-chart-o"></i><span class="break"></span>Model Results
+                 </h2>
+                 <div class="box-icon">
+                     <a ng-click="showModelResults=!showModelResults" class="btn-minimize"><i class="fa" ng-class="showModelResults?'fa-chevron-up':'fa-chevron-down'"></i></a>
+                     <a ng-click="modelResultsON=false" class="btn-close"><i class="fa fa-times"></i></a>
+                 </div>
+             </div>
+             <div ng-show="showModelResults" class="box-content">
+                 <table ng-table="tableParams" template-pagination="custom/emptypager" class="table table-striped table-bordered">
+                         <tr ng-repeat="fld in model_results.columns">
+                             <td data-title="'Variable'">
+                                 {{fld}}
+                             </td>
+                             <td data-title="'Coefficient'" align="right">
+                                 {{model_results.est_results[$index][0]|number}}
+                             </td>
+                             <td data-title="'Standard Error'" align="right">
+                                 {{model_results.est_results[$index][1]|number}}
+                             </td>
+                             <td data-title="'T-score'" align="right">
+                                 {{model_results.est_results[$index][2]|number}}
+                             </td>
+                         </tr>
+                         <tr>
+                             <td>
+                                 <b>R-squared</b>
+                             </td>
+                             <td align="right">
+                                 {{model_results.rsquared|number}}
+                             </td>
+                         </tr>
+                         <tr>
+                             <td>
+                                 <b>Adjusted R-squared</b>
+                             </td>
+                             <td align="right">
+                                 {{model_results.rsquared_adj|number}}
+                             </td>
+                         </tr>
+                 </table>
+                 <script type="text/ng-template" id="custom/emptypager"></script>
+             </div>
+         </div>
+     </div>
+</div>
+
+
+<!-- describe table -->
+<div class="row">
+    <div class="col-md-12">
+        <div ng-show="summaryON" class="box" ng-init="showSummaryBox=false">
+            <div class="box-header" data-original-title>
+                <h2><i class="fa fa-bar-chart-o"></i><span class="break"></span>Table Describe - {{activeID|uppercase}}</h2>
+                <div class="box-icon">
+                    <a ng-click="showSummaryBox=!showSummaryBox" class="btn-minimize"><i class="fa" ng-class="showSummaryBox?'fa-chevron-up':'fa-chevron-down'"></i></a>
+                    <a ng-click="summaryON=false" class="btn-close"><i class="fa fa-times"></i></a>
+                </div>
             </div>
-            <!-- /widget-header -->
-            <div class="widget-content">
+            <div ng-show="showSummaryBox" class="box-content">
                 <table class="table table-striped table-bordered">
                     <thead>
                     <tr>
@@ -173,8 +278,6 @@
                     </tbody>
                 </table>
             </div>
-            <!-- /widget-content -->
         </div>
-        <!-- /widget -->
     </div>
 </div>

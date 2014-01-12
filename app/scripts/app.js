@@ -6,7 +6,8 @@
   'ngSanitize',
   'ui.router',
   'CornerCouch',
-  'nvd3ChartDirectives'
+  'nvd3ChartDirectives',
+  'ngTable'
 ])
   .config(function ($stateProvider, $urlRouterProvider) {
 

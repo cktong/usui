@@ -1,68 +1,177 @@
-<!doctype html>
-<!--[if lt IE 7]>
-<html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>
-<html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>
-<html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!-->
-<html class="no-js"> <!--<![endif]-->
+<!DOCTYPE html>
+<html lang="en">
 <head>
+
+    <!-- start: Meta -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>UrSA</title>
+    <!-- end: Meta -->
 
-    <title>USUI</title>
+    <!-- start: Mobile Specific -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- end: Mobile Specific -->
 
-    <link rel="stylesheet" href="styles/nv.d3.css"/>
+    <!-- start: CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/style.min.css" rel="stylesheet">
+    <link href="assets/css/retina.min.css" rel="stylesheet">
+    <!-- end: CSS -->
 
-    <link href="styles/bootstrap.min.css" rel="stylesheet">
-    <link href="styles/bootstrap-responsive.min.css" rel="stylesheet">
+    <!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <script src="assets/js/respond.min.js"></script>
+    <link href="assets/css/ie.css" rel="stylesheet">
+    <![endif]-->
 
-    <link href="styles/googlefont.css" rel="stylesheet">
-    <link href="styles/font-awesome.min.css" rel="stylesheet">
-
-    <link href="styles/ui-lightness/jquery-ui-1.10.0.custom.min.css" rel="stylesheet">
-
-    <link href="styles/base-admin-3.css" rel="stylesheet">
-    <link href="styles/base-admin-3-responsive.css" rel="stylesheet">
-
-    <link href="styles/custom.css" rel="stylesheet">
-
-    <link href="plugins/msgGrowl/css/msgGrowl.css" rel="stylesheet">
-
-    <!-- build:css(.tmp) styles/main.css -->
-    <!-- endbuild -->
+    <!--[if IE 9]>
+    <link id="ie9style" href="assets/css/ie9.css" rel="stylesheet">
+    <![endif]-->
 </head>
+
 <body ng-app="usuiApp">
-<!--[if lt IE 7]>
-<p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
-    your browser</a> to improve your experience.</p>
-<![endif]-->
+<!-- start: Header -->
+<div class="navbar">
+<div class="navbar-inner">
+<div class="container">
+<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".sidebar-nav.nav-collapse">
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+    <span class="icon-bar"></span>
+</button>
+<a class="navbar-brand" href="index.html"><span>Urban Spatial Analysis Toolkit (UrSA)</span></a>
 
-<!--[if lt IE 9]>
-<script src="bower_components/es5-shim/es5-shim.js"></script>
-<script src="bower_components/json3/lib/json3.min.js"></script>
-<![endif]-->
+   <!--
+   <div ng-include src="'header.html'"></div>
+   -->
 
-<!-- Add your site or application content here -->
-<div ng-include src="'navbar.html'"></div>
-
-<div ng-include src="'subnavbar.html'" ng-controller="navbarCtrl"></div>
-
-<div class="main">
-    <div class="container">
-
-<div ui-view=""></div>
-
-    </div>
 </div>
+</div>
+</div>
+<!-- start: Header -->
 
-<div ng-include src="'footer.html'"></div>
+<div class="container">
+<div class="row">
 
+    <div ng-include src="'sidebar.html'" ng-controller="navbarCtrl"></div>
+
+    <a id="main-menu-toggle" class="hidden-xs open"><i class="fa fa-bars"></i></a>
+<!-- start: Content -->
+<div id="content" class="col-sm-11">
+
+    <div ui-view=""></div>
+
+</div>
+<!-- end: Content -->
+
+<!--
+<div ng-include src="'widgetsarea.html'"></div>
+
+<a id="widgets-area-button" class="hidden-sm hidden-xs open"><i class="fa fa-bars"></i></a>
+-->
+</div><!--/row-->
+
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                <p>Here settings can be configured...</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+</div><!--/container-->
+
+
+
+
+<div class="clearfix"></div>
+
+<footer>
+    <p>
+        <span style="text-align:left;float:left">&copy; 2014 Synthicity, Inc.</span>
+    </p>
+</footer>
+
+<!-- start: JavaScript-->
+<!--[if !IE]>-->
+
+<script src="assets/js/jquery-2.0.3.min.js"></script>
+
+<!--<![endif]-->
+
+<!--[if IE]>
+
+<script src="assets/js/jquery-1.10.2.min.js"></script>
+
+<![endif]-->
+
+<!--[if !IE]>-->
+
+<script type="text/javascript">
+    window.jQuery || document.write("<script src='assets/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
+</script>
+
+<!--<![endif]-->
+
+<!--[if IE]>
+
+<script type="text/javascript">
+    window.jQuery || document.write("<script src='assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+</script>
+
+<![endif]-->
+<script src="assets/js/jquery-migrate-1.2.1.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+
+
+<!-- page scripts -->
+<script src="assets/js/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="assets/js/jquery.sparkline.min.js"></script>
+<!--[if lte IE 8]><script language="javascript" type="text/javascript" src="assets/js/excanvas.min.js"></script><![endif]-->
+<script src="assets/js/jquery.flot.min.js"></script>
+<script src="assets/js/jquery.flot.pie.min.js"></script>
+<script src="assets/js/jquery.flot.stack.min.js"></script>
+<script src="assets/js/jquery.flot.resize.min.js"></script>
+<script src="assets/js/jquery.flot.time.min.js"></script>
+<script src="assets/js/jquery.dataTables.min.js"></script>
+<script src="assets/js/dataTables.bootstrap.min.js"></script>
+<script src="assets/js/retina.min.js"></script>
+<script src="assets/js/raphael.min.js"></script>
+<script src="assets/js/justgage.1.0.1.min.js"></script>
+
+<script src="assets/js/jquery-migrate-1.2.1.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+
+
+<!-- inline scripts related to this page -->
+<script src="assets/js/pages/table.js"></script>
+
+<!-- theme scripts -->
+<script src="assets/js/custom.min.js"></script>
+<script src="assets/js/core.min.js"></script>
+
+<!-- inline scripts related to this page -->
+<script src="assets/js/pages/index.js"></script>
+
+<!-- end: JavaScript-->
+
+<!--
 <script src="bower_components/jquery/jquery.js"></script>
+-->
 <script src="bower_components/angular/angular.js"></script>
+<!--
 <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+-->
 
 <!-- build:js scripts/plugins.js -->
 
@@ -78,6 +187,8 @@
 <script src="bower_components/d3/d3.min.js"></script>
 <script src="bower_components/nvd3/nv.d3.min.js"></script>
 <link rel="stylesheet" href="bower_components/nvd3/nv.d3.min.css"/>
+<script src="bower_components/ng-table/ng-table.js"></script>
+<link rel="stylesheet" href="bower_components/ng-table/ng-table.css"/>
 <!-- endbuild -->
 
 <script src="plugins/msgGrowl/js/msgGrowl.js"></script>
@@ -94,5 +205,6 @@
 <script src="scripts/controllers/reports.js"></script>
 <script src="scripts/controllers/tables.js"></script>
 <!-- endbuild -->
+
 </body>
 </html>

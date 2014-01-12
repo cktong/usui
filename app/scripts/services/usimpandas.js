@@ -15,23 +15,18 @@ angular.module('usuiApp')
 
         return {
             root: "http://localhost:8765/",
+            download: function($scope,url,outname) {
+                this.query(this.root+"dataset_read?callback=JSON_CALLBACK&url="+encodeURIComponent(url)+"&outname="+outname,"list",$scope);
+            },
             merge: function(left,$scope,right,lefton,righton,how) {
                 if(lefton === undefined) lefton = "index";
                 if(righton === undefined) righton = "index";
                 var out = "tmptbl";
                 this.query(this.root+"merge_datasets/"+left+"/"+right+"/"+lefton+"/"+righton+"/"+how+"/"+out+"?callback=JSON_CALLBACK","list",$scope)
             },
-            model: function($scope) {
+            model: function($scope,selectedFields,table,model,dep_var,dep_var_transform,output_transform) {
                 var req =
                 {
-                    "table": "dset.fetch('homesales')",
-                    "model": "hedonicmodel",
-                    "dep_var": "Sale_price_flt",
-                    "ind_vars": [
-                        "Lot_size",
-                        "SQft",
-                        "Year_built"
-                    ],
                     "add_constant": true,
                     "output_names": [
                         "coeff-reshedonic-rent.csv",
@@ -39,10 +34,15 @@ angular.module('usuiApp')
                         "residential_rent",
                         "residential_rent"
                     ],
-                    "output_transform": "np.exp"
                 };
+                req["dep_var"] = dep_var;
+                req["dep_var_transform"] = dep_var_transform;
+                req["output_transform"] = output_transform;
+                req["ind_vars"] = selectedFields;
+                req["table"] = "dset.fetch('"+table+"')";
+                req["model"] = model;
 
-                this.query(this.root+"execmodel?callback=JSON_CALLBACK&json=" + JSON.stringify(req),"list",$scope);
+                this.query(this.root+"execmodel?callback=JSON_CALLBACK&json=" + JSON.stringify(req),"model_results",$scope);
             },
             list: function($scope) {
                 this.query(this.root+"datasets?callback=JSON_CALLBACK","list",$scope)
@@ -72,7 +72,7 @@ angular.module('usuiApp')
                         $scope.safeApply(function() {$scope[attr] = data;} );
                     })
                     .error(function (data, status) {
-                        growl("error","Koala query failed",status);
+                        growl("error","Bamboo query failed",status);
                     });
 
             }
