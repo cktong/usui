@@ -56,13 +56,14 @@ angular.module('usuiApp')
             summary: function (id,$scope) {
                 this.query(this.root+"datasets/"+id+"/summary?callback=JSON_CALLBACK&select=all","summary",$scope)
             },
-            show: function (id,$scope,limit,orderby,descending,filter,groupby,metric) {
+            show: function (id,$scope,limit,orderby,descending,filter,groupby,metric,page) {
                 if(descending) orderby = "-"+orderby;
                 orderby = orderby === undefined ? "" : "&order_by="+orderby;
                 filter = filter === undefined ? "" : "&query="+filter;
                 groupby = groupby === undefined || metric === undefined ? "" : "&groupby="+groupby;
                 metric = groupby === undefined || metric === undefined ? "" : "&metric="+metric;
-                this.query(this.root+"datasets/"+id+"?callback=JSON_CALLBACK&limit="+limit+orderby+filter+groupby+metric,"show",$scope)
+                page = page === undefined ? "" : "&page=" + page
+                this.query(this.root+"datasets/"+id+"?callback=JSON_CALLBACK&limit="+limit+orderby+filter+groupby+metric+page,"show",$scope)
             },
             query: function (url,attr,$scope) {
                 console.log(url);

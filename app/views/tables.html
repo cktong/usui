@@ -134,10 +134,11 @@
                     <thead>
                     <tr>
                         <th ng-repeat="fld in show.labels"
-                            class="text-center sortable" ng-class="{
-                                                                    'sort-asc': tableParams.isSortBy(fld, 'asc'),
-                                                                    'sort-desc': tableParams.isSortBy(fld, 'desc')
-                                                                  }"
+                            class="text-center" ng-class="{
+                                                            'sortable': showRows,
+                                                            'sort-asc': tableParams.isSortBy(fld, 'asc'),
+                                                            'sort-desc': tableParams.isSortBy(fld, 'desc')
+                                                          }"
                             ng-click="tableParams.sorting(fld, tableParams.isSortBy(fld, 'asc') ? 'desc' : 'asc')">
                             <div>{{fld}}</div>
                         </th>
@@ -158,12 +159,12 @@
                     </tbody>
                 </table>
                 <script type="text/ng-template" id="custom/pager">
-                    <ul class="pager ng-cloak">
+                    <ul ng-show="showRows" class="pager ng-cloak">
                         <li ng-repeat="page in pages"
                             ng-class="{'disabled': !page.active, 'previous': page.type == 'prev', 'next': page.type == 'next'}"
                             ng-show="page.type == 'prev' || page.type == 'next'" ng-switch="page.type">
-                            <a ng-switch-when="prev" ng-click="params.page(page.number)" href="">&laquo; Previous</a>
-                            <a ng-switch-when="next" ng-click="params.page(page.number)" href="">Next &raquo;</a>
+                            <a ng-switch-when="prev" ng-click="params.page(page.number)" href="">&laquo; Previous <span ng-show="page.active">({{page.number}})</span></a>
+                            <a ng-switch-when="next" ng-click="params.page(page.number)" href="">Next <span ng-show"page.active">({{page.number}})</span> &raquo;</a>
                         </li>
                         <li>
                             <div class="btn-group">
@@ -171,6 +172,8 @@
                                 <button type="button" ng-class="{'active':params.count() == 25}" ng-click="params.count(25)" class="btn btn-default">25</button>
                                 <button type="button" ng-class="{'active':params.count() == 50}" ng-click="params.count(50)" class="btn btn-default">50</button>
                                 <button type="button" ng-class="{'active':params.count() == 100}" ng-click="params.count(100)" class="btn btn-default">100</button>
+                                <br><br>
+                                Page {{params.page()}}
                             </div>
                         </li>
                     </ul>

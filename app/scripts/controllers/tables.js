@@ -37,15 +37,6 @@ angular.module('usuiApp')
     $scope.$watch('estimation_merge_table', function() {
         if($scope.estimation_merge_table != undefined) bamboo.columns($scope.estimation_merge_table,$scope,"right_fields");
     });
-    $scope.$watch('show', function() {
-        if($scope.show != undefined) {
-            $scope.safeApply(function() {
-                $scope.pages = $scope.tableParams.reloadPages();
-                console.log("herenow");
-                console.log($scope.pages);
-            });
-        }
-    });
 
     $scope.setActiveTable = function(tbl) {
         $scope.activeID = tbl;
@@ -79,12 +70,13 @@ angular.module('usuiApp')
     $scope.mergeTables = function () {
         bamboo.merge($scope.estimation_table,$scope,$scope.estimation_merge_table,$scope.left_join_fld,$scope.right_join_fld,$scope.merge_type)
     }
-    $scope.showSampleRows = function(id,orderby,descending,count) {
+    $scope.showSampleRows = function(id,orderby,descending,count,page) {
         $scope.sorted = orderby;
         $scope.descending = descending;
         count = count === undefined ? NUMSAMPLEROWS : count;
+        page = page === undefined ? 1 : page;
 
-        bamboo.show(id,$scope,count,orderby,descending,$scope.filterQuery,$scope.groupBy,$scope.metric);
+        bamboo.show(id,$scope,count,orderby,descending,$scope.filterQuery,$scope.groupBy,$scope.metric,page);
         $scope.sampleRowsON = true;
     }
     $scope.showSummary = function(id) {
@@ -97,15 +89,15 @@ angular.module('usuiApp')
         page: 1,             // show first page
         count: NUMSAMPLEROWS // count per page
     }, {
-        $scope: $scope,
         total: 1000, // length of data
         getData: function ($defer, params) {
-            console.log("running");
             var k = Object.keys(params.sorting());
+            $scope.safeApply(function() {$scope.tableParams.reloadPages();});
+
             if (k.length) {
-                $scope.showSampleRows($scope.activeID, k[0], params.sorting()[k] == 'desc', params.count());
+                $scope.showSampleRows($scope.activeID, k[0], params.sorting()[k] == 'desc', params.count(), params.page());
             } else {
-                $scope.showSampleRows($scope.activeID, undefined, undefined, params.count());
+                $scope.showSampleRows($scope.activeID, undefined, undefined, params.count(), params.page());
             }
         }
     });
