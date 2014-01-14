@@ -140,7 +140,8 @@
                                                             'sort-desc': tableParams.isSortBy(fld, 'desc')
                                                           }"
                             ng-click="tableParams.sorting(fld, tableParams.isSortBy(fld, 'asc') ? 'desc' : 'asc')">
-                            <div>{{fld}}</div>
+                            <!-- TODO: app settings for truncation -->
+                            <div>{{fld | characters:12: true}}</div>
                         </th>
                     </tr>
                     </thead>
@@ -148,7 +149,7 @@
                     <tr ng-show="showRows" ng-repeat="rec in show.recs">
                         <td ng-hide="fld == 'labels'" ng-repeat="fld in rec track by $index" sortable="fld">
                             <div ng-click="addNumToQuery(fld)" ng-if="isNumber(fld)">{{fld|number}}</div>
-                            <div ng-click="addStrToQuery(fld)" ng-if="!isNumber(fld)">{{fld}}</div>
+                            <div ng-click="addStrToQuery(fld)" ng-if="!isNumber(fld)">{{fld | characters:12: true}}</div>
                         </td>
                     </tr>
                     <tr>
@@ -159,7 +160,7 @@
                                 <span class="switch-label" data-on="On" data-off="Off"></span>
                                 <span class="switch-handle"></span>
                             </label>
-
+                            <br>
                             <select chosen style="width: 70px;" ng-model="selectedFieldsTransform[fld]" ng-options="trans for trans in transformations">
                             </select>
 
@@ -199,7 +200,9 @@
             <table style="table-layout: fixed;">
                 <tr>
                     <td colspan="4" style="word-break: break-all; word-wrap: break-word; width:400px;">
-                        Patsy Equation: {{patsyModel}}
+                        <div class="hero-unit">
+                            Patsy Equation: {{patsyModel}}
+                        </div>
                     </td>
                 </tr>
                 <tr>

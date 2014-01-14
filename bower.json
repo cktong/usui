@@ -13,7 +13,8 @@
     "angular-ui-router": "*",
     "angularjs-nvd3-directives": "*",
     "ng-table": "*",
-    "angular-chosen": "*"
+    "angular-chosen": "*",
+    "angular-truncate": "*"
   },
   "devDependencies": {
     "angular-mocks": "~1.0.7",

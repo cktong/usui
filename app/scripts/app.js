@@ -5,10 +5,11 @@
   'ngResource',
   'ngSanitize',
   'ui.router',
+  'truncate',
   'CornerCouch',
   'nvd3ChartDirectives',
   'ngTable'
-])
+  ])
   .config(function ($stateProvider, $urlRouterProvider) {
 
     $urlRouterProvider.otherwise('/home');
