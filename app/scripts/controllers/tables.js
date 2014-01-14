@@ -25,7 +25,8 @@ angular.module('usuiApp')
     $scope.filterQuery = '';
     bamboo.list($scope);
     $scope.selectedFields = {};
-    $scope.transformations = ['np.log1p','np.exp'];
+    $scope.selectedFieldsTransform = {};
+    $scope.transformations = ['None','np.log','np.log1p','np.log10','np.exp','np.sqrt','np.square','np.reciprocal','np.absolute','np.floor','np.ceil'];
     $scope.dep_var = "Sale_price_flt";
     $scope.dep_var_transform = "np.log1p";
     $scope.output_transform = "np.exp";
@@ -37,6 +38,22 @@ angular.module('usuiApp')
     $scope.$watch('estimation_merge_table', function() {
         if($scope.estimation_merge_table != undefined) bamboo.columns($scope.estimation_merge_table,$scope,"right_fields");
     });
+    function updatePatsyModel() {
+        $scope.patsyModel = $scope.dep_var_transform + "(" + $scope.dep_var + ") ~ " +
+            $.grep(Object.keys($scope.selectedFields),function (v) {return $scope.selectedFields[v];})
+                .map(function(x){return x in $scope.selectedFieldsTransform && $scope.selectedFieldsTransform[x] != "None"
+                    ? $scope.selectedFieldsTransform[x]+"("+x+")" : x})
+                .join('+');
+    }
+    $scope.$watchCollection('selectedFields', function () {
+        updatePatsyModel();
+    })
+    $scope.$watchCollection('selectedFieldsTransform', function () {
+        updatePatsyModel();
+    })
+    $scope.$watch('dep_var+dep_var_transform', function () {
+        updatePatsyModel();
+    })
 
     $scope.setActiveTable = function(tbl) {
         $scope.activeID = tbl;
@@ -64,7 +81,11 @@ angular.module('usuiApp')
         bamboo.download($scope,$scope.urlToFetch,$scope.urlToFetchOutName)
     }
     $scope.execModel = function () {
-        bamboo.model($scope,$scope.selectedFields,$scope.activeID,"hedonicmodel",$scope.dep_var,$scope.dep_var_transform,$scope.output_transform);
+        if($scope.patsyModel) {
+            bamboo.patsymodel($scope,$scope.patsyModel,$scope.activeID,"hedonicmodel");
+        } else {
+            bamboo.model($scope,$scope.selectedFields,$scope.activeID,"hedonicmodel",$scope.dep_var,$scope.dep_var_transform,$scope.output_transform);
+        }
         $scope.modelResultsON = true;
     }
     $scope.mergeTables = function () {

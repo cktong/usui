@@ -152,9 +152,19 @@
                         </td>
                     </tr>
                     <tr>
-                        <td ng-repeat="fld in show.labels">
-                            <input type="checkbox" ng-model="selectedFields[fld]" />
+                        <div class="form-group">
+                        <td ng-repeat="fld in show.labels" align="center">
+                            <label class="switch switch-primary">
+                                <input type="checkbox" ng-model="selectedFields[fld]" class="switch-input">
+                                <span class="switch-label" data-on="On" data-off="Off"></span>
+                                <span class="switch-handle"></span>
+                            </label>
+
+                            <select chosen style="width: 70px;" ng-model="selectedFieldsTransform[fld]" ng-options="trans for trans in transformations">
+                            </select>
+
                         </td>
+                        </div>
                     </tr>
                     </tbody>
                 </table>
@@ -186,8 +196,17 @@
 <br>
 <div class="row">
         <div class="col-md-12" align="center">
-            <table>
+            <table style="table-layout: fixed;">
                 <tr>
+                    <td colspan="4" style="word-break: break-all; word-wrap: break-word; width:400px;">
+                        Patsy Equation: {{patsyModel}}
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4">
+                        <input class="form-control" ng-model='patsyAddOn' placeholder="Enter custom patsy variables">
+                    </td>
+                    </tr><tr>
                     <td>
                         <select class="form-control" ng-model="dep_var" ng-options="fld for fld in show.labels">
                         </select>
@@ -200,6 +219,7 @@
                         <select class="form-control" ng-model="output_transform" ng-options="trans for trans in transformations">
                         </select>
                     </td>
+
                     <td>
                         <button ng-click="execModel()" type="button" class="btn btn-default btn-md">
                             Estimate Model
@@ -214,7 +234,7 @@
 
 
 <div class="row">
-     <div class="col-md-offset-2 col-lg-8">
+     <div class="col-md-offset-2 col-md-8">
          <div ng-show="model_results&&modelResultsON" class="box" ng-init="showModelResults=true">
              <div class="box-header" data-original-title>
                  <h2><i class="fa fa-bar-chart-o"></i><span class="break"></span>Model Results

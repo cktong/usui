@@ -44,6 +44,24 @@ angular.module('usuiApp')
 
                 this.query(this.root+"execmodel?callback=JSON_CALLBACK&json=" + JSON.stringify(req),"model_results",$scope);
             },
+            patsymodel: function($scope,patsyModel,table,model) {
+                var req =
+                {
+                    "output_names": [
+                        "coeff-reshedonic-rent.csv",
+                        "RESIDENTIAL HEDONIC MODEL (RENT)",
+                        "residential_rent",
+                        "residential_rent"
+                    ]
+                };
+                var patsy = encodeURIComponent(patsyModel);
+                console.log(patsy);
+                req["patsy"] = patsy;
+                req["table"] = "dset.fetch('"+table+"')";
+                req["model"] = model;
+
+                this.query(this.root+"execmodel?callback=JSON_CALLBACK&json=" + JSON.stringify(req),"model_results",$scope);
+            },
             list: function($scope) {
                 this.query(this.root+"datasets?callback=JSON_CALLBACK","list",$scope)
             },

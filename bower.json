@@ -12,7 +12,8 @@
     "angular-sanitize": "~1.0.7",
     "angular-ui-router": "*",
     "angularjs-nvd3-directives": "*",
-    "ng-table": "*"
+    "ng-table": "*",
+    "angular-chosen": "*"
   },
   "devDependencies": {
     "angular-mocks": "~1.0.7",
