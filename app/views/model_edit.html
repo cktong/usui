@@ -1,0 +1,46 @@
+<table>
+    <tr>
+        <td>Enter table to search:</td>
+        <td><input class="form-control" ng-model='chart.table'></td>
+    </tr>
+    <tr>
+        <td>Enter chart description:</td>
+        <td><textarea class="form-control" cols=49 rows=4 ng-model='chart.desc'></textarea></td>
+    </tr>
+    <tr>
+        <td>Enter chart name:</td>
+        <td><input class="form-control" cols=49 rows=4 ng-model='chart.name'></td>
+    </tr>
+    <tr>
+        <td>Filter to apply:</td>
+        <td><textarea class="form-control" cols=49 rows=4 ng-model="chart.filter"></textarea></td>
+    </tr>
+    <tr>
+        <td>Enter metric to compute:</td>
+        <td><input class="form-control" ng-model='chart.metric'></td>
+    </tr>
+    <tr>
+        <td>Group by field:</td>
+        <td><input class="form-control" ng-model='chart.groupby'></td>
+    </tr>
+    <tr>
+        <td>Limit to number of results:</td>
+        <td><input class="form-control" ng-model='chart.limit'></td>
+    </tr>
+    <tr>
+        <td>Port:</td>
+        <td><input class="form-control" ng-model='chart.port'></td>
+    </tr>
+    <tr>
+        <td>Merge with parcels:</td>
+        <td><input type="checkbox" class="toggle" ng-model='chart.jointoparcels'></td>
+    </tr>
+    <tr>
+        <td>Sort:</td>
+        <td><input type="checkbox" class="toggle" ng-model='chart.sort'></td>
+    </tr>
+    <tr>
+        <td>Descending:</td>
+        <td><input type="checkbox" class="toggle" ng-model='chart.orderdesc'></td>
+    </tr>
+</table>

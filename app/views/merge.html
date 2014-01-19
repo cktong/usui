@@ -1,0 +1,49 @@
+<!-- merge data -->
+<table>
+    <tr>
+        <td>
+            Select table:
+        </td>
+        <td>
+            <select chosen ng-model="estimation_table" ng-options="id for id in list"></select>
+        </td>
+    </tr>
+    <tr ng-show="estimation_table">
+        <td>
+            Select merge table:
+        </td>
+        <td>
+            <select chosen ng-model="estimation_merge_table" ng-options="id for id in list"></select>
+        </td>
+    </tr>
+    <tr ng-show="estimation_table">
+        <td>Select left join field:</td>
+        <td>
+            <select chosen ng-model="left_join_fld" ng-options="fld for fld in left_fields">
+                <option value="">use index</option>
+            </select>
+        </td>
+    </tr>
+    <tr ng-show="estimation_merge_table">
+        <td>Select right join field:</td>
+        <td>
+            <select chosen ng-model="right_join_fld" ng-options="fld for fld in right_fields">
+                <option value="">use index</option>
+            </select>
+        </td>
+    </tr>
+    <tr ng-show="estimation_table">
+        <td>Select join type:</td>
+        <td>
+            <select chosen ng-model="merge_type" ng-options="typ for typ in ['left','right','outer','inner']"></select>
+        </td>
+    </tr>
+    <tr ng-show="estimation_table">
+        <td></td>
+        <td>
+            <button ng-click="mergeTables()" type="button" class="btn btn-default btn-sm">
+                Merge tables
+            </button>
+        </td>
+    </tr>
+</table>

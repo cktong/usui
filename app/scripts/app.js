@@ -39,6 +39,22 @@
         templateUrl: 'views/tables.html',
         controller: 'TablesCtrl'
       })
+      .state('/models', {
+        url: '/models',
+        templateUrl: 'views/models.html',
+        controller: 'ModelsCtrl'
+      })
+      .state('/models.model', {
+        url: '/{id}',
+        templateUrl: 'views/model.html',
+        controller: 'ModelCtrl'
+      })
+      .state('/simulations', {
+        url: '/simulations',
+        templateUrl: 'views/simulations.html',
+        controller: 'SimulationsCtrl'
+      })
+
   })
 
 // message growler
