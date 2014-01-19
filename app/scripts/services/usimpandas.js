@@ -24,6 +24,10 @@ angular.module('usuiApp')
                 var out = "tmptbl";
                 this.query(this.root+"merge_datasets/"+left+"/"+right+"/"+lefton+"/"+righton+"/"+how+"/"+out+"?callback=JSON_CALLBACK","list",$scope)
             },
+            modeldoc: function($scope,req,estimate,simulate)
+            {
+                this.query(this.root+"execmodel?callback=JSON_CALLBACK&estimate="+estimate+"&simulate="+simulate+"&json=" + JSON.stringify(req),"model_results",$scope);
+            },
             model: function($scope,selectedFields,table,model,dep_var,dep_var_transform,output_transform) {
                 var req =
                 {

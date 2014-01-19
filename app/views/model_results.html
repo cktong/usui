@@ -1,0 +1,69 @@
+<div ng-show="model_results&&modelResultsON" class="box" ng-init="showModelResults=true" ng-repeat="(segment,model_results) in model_results">
+    <div class="box-header" data-original-title>
+        <h2><i class="fa fa-bar-chart-o"></i><span class="break"></span>Model Results <span ng-show="segment!='null'">, Segment = {{segment}}</span>
+        </h2>
+        <div class="box-icon">
+            <a ng-click="showModelResults=!showModelResults" class="btn-minimize"><i class="fa" ng-class="showModelResults?'fa-chevron-up':'fa-chevron-down'"></i></a>
+            <a ng-click="modelResultsON=false" class="btn-close"><i class="fa fa-times"></i></a>
+        </div>
+    </div>
+    <div ng-show="showModelResults" class="box-content">
+        <table ng-table="tableParams" template-pagination="custom/emptypager" class="table table-striped table-bordered">
+            <tr ng-repeat="fld in model_results.columns">
+                <td data-title="'Variable'">
+                    {{fld}}
+                </td>
+                <td data-title="'Coefficient'" align="right">
+                    {{model_results.est_results[$index][0]|number}}
+                </td>
+                <td data-title="'Standard Error'" align="right">
+                    {{model_results.est_results[$index][1]|number}}
+                </td>
+                <td data-title="'T-score'" align="right" ng-style="{'background-color': sigColor(model_results.est_results[$index][2])}">
+                    {{model_results.est_results[$index][2]|number}}
+                </td>
+            </tr>
+            <tr ng-show="model_results.rsquared">
+                <td>
+                    <b>R-squared</b>
+                </td>
+                <td align="right">
+                    {{model_results.rsquared|number}}
+                </td>
+            </tr>
+            <tr ng-show="model_results.rsquared_adj">
+                <td>
+                    <b>Adjusted R-squared</b>
+                </td>
+                <td align="right">
+                    {{model_results.rsquared_adj|number}}
+                </td>
+            </tr>
+            <tr ng-show="model_results['null loglik']">
+                <td>
+                    <b>Null Log-likelihood</b>
+                </td>
+                <td align="right">
+                    {{model_results['null loglik']|number}}
+                </td>
+            </tr>
+            <tr ng-show="model_results['converged loglik']">
+                <td>
+                    <b>Converged Log-likelihood</b>
+                </td>
+                <td align="right">
+                    {{model_results['converged loglik']|number}}
+                </td>
+            </tr>
+            <tr ng-show="model_results['loglik ratio']">
+                <td>
+                    <b>Log-likelihood Ratio</b>
+                </td>
+                <td align="right">
+                    {{model_results['loglik ratio']|number}}
+                </td>
+            </tr>
+        </table>
+        <script type="text/ng-template" id="custom/emptypager"></script>
+    </div>
+</div>

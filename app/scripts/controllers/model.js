@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('usuiApp')
-    .controller('ModelCtrl', function ($scope, $stateParams) {
+    .controller('ModelCtrl', function ($scope, $stateParams, usimpandas) {
         $scope.model = $scope.modelsdb.getbyind($stateParams.id);
         $scope.id = $stateParams.id;
 
@@ -12,6 +12,16 @@ angular.module('usuiApp')
 
         $scope.editModel = function () {
             $scope.isEditing = true;
+        }
+        $scope.estimateModel = function () {
+            $scope.model["var_lib_db"] = "bayarea_models";
+            $scope.modelResultsON = true;
+            usimpandas.modeldoc($scope,$scope.model,1,0);
+        }
+        $scope.simulateModel = function () {
+            $scope.model["var_lib_db"] = "bayarea_models";
+            $scope.modelResultsON = true;
+            usimpandas.modeldoc($scope,$scope.model,0,1);
         }
         $scope.saveLocally = function () {
             $scope.isEditing = false;

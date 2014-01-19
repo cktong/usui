@@ -2,7 +2,9 @@
 
 angular.module('usuiApp')
   .service('modelsdb', function ($rootScope, cornercouch) {
-    var modelsdb = cornercouch("http://localhost:5984","GET").getDB("bayarea");
+    var svr = cornercouch("https://urbansim.cloudant.com","JSONP");
+    //svr.login('urbansim','Visua1ization');
+    var modelsdb = svr.getDB("bayarea_models");
 
     modelsdb.queryAll({include_docs: true})
         .success(function (data) { $rootScope.$broadcast('rowsLoaded'); })

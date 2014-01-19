@@ -1,14 +1,29 @@
-<h4>Name of model: {{model.id}}</h4>
-<hr>
-<b>Table:</b> {{model.table}}<br>
-<b>Name:</b> {{model.name}}<br>
-<span ng-show="chart.filter"><b>Apply filter:</b> {{chart.filter}}<br></span>
-<b>Metric:</b> {{chart.metric}}<br>
-<b>Group by:</b> {{chart.groupby}}<br>
-<span ng-show="chart.limit"><b>Limit:</b> {{chart.limit}}<br></span>
-<span ng-show="chart.sort"><b>Sort:</b> {{chart.sort}}<br></span>
-<span ng-show="chart.orderdesc"><b>Descending:</b> {{chart.orderdesc}}<br></span>
-<span ng-show="chart.jointoparcels"><b>Parcel join:</b> {{chart.jointoparcels}}<br></span>
+<h3>Name of model: {{model._id}}</h3>
+<div ng-show="model.model == 'variablelibrary'">
+<span ng-repeat="(key,value) in model">
+    <span ng-hide="['_id','_rev','model'].indexOf(key) != -1"><b>{{key}}:</b> {{value}}<br></span>
+</span>
+</div>
+<div ng-hide="model.model == 'variablelibrary'">
+<b>Table:</b> {{model.table}}<br></span>
+<b>Simulation table:</b> {{model.table_sim}}<br></span>
+<span ng-show="model.merge"><b>Merge parameters:</b> {{model.merge}}<br></span>
+<b>Model type:</b> {{model.model}}<br></span>
+<br>
+<span><b>Variable library:</b> {{model.var_lib_file}}<br></span>
+<span><b>Independent variables:</b> {{model.ind_vars.join(',')}}<br></span>
+<span ng-show="model.add_constant"><b>Add constant:</b> {{model.add_constant}}<br></span>
+<br>
+<span ng-show="model.sample_size"><b>Sample size:</b> {{model.sample_size}}<br></span>
+<span ng-show="model.alternatives"><b>Alternatives:</b> {{model.alternatives}}<br></span>
+<span><b>Dependent variable:</b> {{model.dep_var}}<br></span>
+<span ng-show="model.dep_var_transform"><b>Dependent variable transformation:</b> {{model.dep_var_transform}}<br></span>
+<span ng-show="model.output_transform"><b>Output transformation:</b> {{model.output_transform}}<br></span>
+<br>
+<span ng-show="model.segment"><b>Segment on:</b> {{model.segment.join(',')}}<br></span>
+<span><b>Output names:</b> {{model.output_names.join(', ')}}<br></span>
+</div>
+<br>
 
 <div ng-show="isEditing">
 <hr>
@@ -17,7 +32,11 @@
 <button class="btn btn-default" ng-click="saveToDB(id)">Save to database</button>
 </div>
 <div ng-hide="isEditing">
-<button class="btn btn-default" ng-click="editModel()">Edit this model</button>
-<hr>
-<div ng-include src="'views/chart_display.html'"></div>
+<p class="btn-group">
+<button class="btn btn-mini btn-info" ng-click="editModel()">Edit</button>
+<button ng-hide="model.model == 'variablelibrary'" class="btn btn-mini btn-success" ng-click="estimateModel()">Estimate</button>
+<button ng-hide="model.model == 'variablelibrary'" class="btn btn-mini btn-success" ng-click="simulateModel()">Simulate</button>
+</p>
 </div>
+
+<div ng-include src="'views/model_results.html'"></div>

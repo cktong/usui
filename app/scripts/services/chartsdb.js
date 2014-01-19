@@ -2,7 +2,9 @@
 
 angular.module('usuiApp')
   .service('chartsdb', function ($rootScope, cornercouch) {
-    var chartsdb = cornercouch("http://localhost:5984","GET").getDB("charts");
+    var svr = cornercouch("https://urbansim.cloudant.com","JSONP");
+    //svr.login('urbansim','Visua1ization');
+    var chartsdb = svr.getDB("bayarea_charts");
 
     chartsdb.queryAll({include_docs: true})
         .success(function () { $rootScope.$broadcast('rowsLoaded'); })
