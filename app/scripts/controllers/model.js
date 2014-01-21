@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('usuiApp')
-    .controller('ModelCtrl', function ($scope, $stateParams, usimpandas) {
+    .controller('ModelCtrl', function ($scope, globals, $stateParams, usimpandas) {
         $scope.model = $scope.modelsdb.getbyind($stateParams.id);
         $scope.id = $stateParams.id;
 

@@ -10,9 +10,10 @@ angular.module('usuiApp')
         $rootScope.aggregations = ['sum()','mean()','max()','min()','quantile()'];
         $rootScope.sigColor = function(val) {
             if(val< 0) val *= -1; // I don't have internet right now ;)
-            if(val > 1.96) return 'Green';
-            else if(val > 1.64) return 'Yellow';
-            return 'Red';
+            if(val > 2.57) return 'rgb(89,189,238';
+            if(val > 1.96) return 'rgb(119,204,80)';
+            else if(val > 1.64) return 'rgb(250,183,49)';
+            return 'rgb(255,42,42)';
         }
         $rootScope.isNumber = function (value) {
             return angular.isNumber(value);
