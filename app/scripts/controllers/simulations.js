@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('usuiApp')
-  .controller('TablesCtrl', function ($scope,bamboo,usimpandas,ngTableParams) {
+  .controller('SimulationsCtrl', function ($scope,usimpandas,ngTableParams) {
     $scope.activateField = function (field) {
         $scope.activeField = {
             label: field,

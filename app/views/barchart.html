@@ -1,0 +1,21 @@
+<div ng-show="activeField" class="widget stacked">
+    <div class="widget-header">
+        <i class="icon-th-list"></i>&nbsp;&nbsp;
+        Quantiles for {{activeField.label}}
+    </div>
+    <!-- /widget-header -->
+    <div class="widget-content">
+        <nvd3-line-chart
+                data="activeField.chartData"
+                id="{{activeField.label}}"
+                height="{{activeField.height}}"
+                margin="{top: 10, right: 10, bottom: 20 , left: 60}"
+                interative="true"
+                tooltips="true"
+                showXAxis="true"
+                xaxistickvalues="[0,1,2,3,4]"
+                showYAxis="true">
+            <svg></svg>
+            </nvd3-multi-bar-chart>
+    </div><!-- /area-chart -->
+</div><!-- /widget-content -->

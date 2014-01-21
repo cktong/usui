@@ -1,105 +1,13 @@
 <div class="row">
-
-    <!-- upload data -->
-    <div class="col-md-6" align="center">
-        <input class="form-control" ng-model='urlToFetch' placeholder="Enter url to fetch">
-        <input class="form-control" ng-model='urlToFetchOutName' placeholder="Enter name to store">
-        <button ng-click="fetchData()" type="button" class="btn btn-default btn-sm">
-            Fetch csv file
-        </button>
-    </div>
-
-    <!-- merge data -->
-    <div class="col-md-6" align="center">
-        <table>
-            <tr>
-                <td>
-                    Select table:
-                </td>
-                <td>
-                    <select class="form-control" ng-model="estimation_table" ng-options="id for id in list"></select>
-                </td>
-            </tr>
-            <tr ng-show="estimation_table">
-                <td>
-                    Select merge table:
-                </td>
-                <td>
-                    <select class="form-control" ng-model="estimation_merge_table" ng-options="id for id in list"></select>
-                </td>
-            </tr>
-            <tr ng-show="estimation_table">
-                <td>Select left join field:</td>
-                <td>
-                    <select class="form-control" ng-model="left_join_fld" ng-options="fld for fld in left_fields">
-                        <option value="">use index</option>
-                    </select>
-                </td>
-            </tr>
-            <tr ng-show="estimation_merge_table">
-                <td>Select right join field:</td>
-                <td>
-                    <select class="form-control" ng-model="right_join_fld" ng-options="fld for fld in right_fields">
-                        <option value="">use index</option>
-                    </select>
-                </td>
-            </tr>
-            <tr ng-show="estimation_table">
-                <td>Select join type:</td>
-                <td>
-                    <select class="form-control" ng-model="merge_type" ng-options="typ for typ in ['left','right','outer','inner']"></select>
-                </td>
-            </tr>
-            <tr ng-show="estimation_table">
-                <td></td>
-                <td>
-                    <button ng-click="mergeTables()" type="button" class="btn btn-default btn-sm">
-                        Merge tables
-                     </button>
-                </td>
-            </tr>
-        </table>
-    </div>
-</div>
-
-
-
-<hr>
-<div ng-show="activeField" class="widget stacked">
-    <div class="widget-header">
-        <i class="icon-th-list"></i>&nbsp;&nbsp;
-        Quantiles for {{activeField.label}}
-    </div>
-    <!-- /widget-header -->
-    <div class="widget-content">
-        <nvd3-line-chart
-                data="activeField.chartData"
-                id="{{activeField.label}}"
-                height="{{activeField.height}}"
-                margin="{top: 10, right: 10, bottom: 20 , left: 60}"
-                interative="true"
-                tooltips="true"
-                showXAxis="true"
-                xaxistickvalues="[0,1,2,3,4]"
-                showYAxis="true">
-            <svg></svg>
-            </nvd3-multi-bar-chart>
-    </div><!-- /area-chart -->
-</div><!-- /widget-content -->
-
-
-<!-- nvd3 graphs, put in modal -->
-<div class="row">
     <div class="col-md-12" align="center">
         <span ng-click="setActiveTable(id)" ng-repeat="id in list" ng-class="activeID === undefined || '{{id}}' == activeID ? '' : 'text-muted'">{{id|uppercase}}<span ng-hide="$last"> | </span></span>
     </div>
 </div>
 
-
 <!-- sample recs -->
 <div class="row">
     <div class="col-md-12">
-        <div ng-show="sampleRowsON" class="box" ng-init="showRows=false">
+        <div ng-show="sampleRowsON" class="box" ng-init="showRows=true">
             <div class="box-header" data-original-title>
                 <h2><i class="fa fa-bar-chart-o"></i><span class="break"></span>Sample Rows - {{activeID|uppercase}}</h2>
                 <div class="box-icon">
@@ -122,14 +30,14 @@
                         </div>
                         <div class="form-group" style="border: 0px; padding: 0px; margin: 0px; width: 20%;">
                             <select ng-model='metric' class="form-control">
-                                <option ng-repeat="fld in ['sum()','mean()','max()','min()','quantile()']">{{fld}}</option>
+                                <option ng-repeat="fld in aggregations">{{fld}}</option>
                             </select>
                         </div>
                     </form>
                 </div>
             </div>
 
-            <div class="box-content table-responsive" style="overflow: auto; overflow-x: scroll; overflow-y: hidden;">
+            <div ng-show="showRows" class="box-content table-responsive" style="overflow: auto; overflow-x: scroll; overflow-y: hidden;">
                 <table ng-table="tableParams" template-pagination="custom/pager" class="table table-striped table-bordered">
                     <thead>
                     <tr>
@@ -146,13 +54,14 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr ng-show="showRows" ng-repeat="rec in show.recs">
+                    <tr ng-repeat="rec in show.recs">
                         <td ng-hide="fld == 'labels'" ng-repeat="fld in rec track by $index" sortable="fld">
-                            <div ng-click="addNumToQuery(fld)" ng-if="isNumber(fld)">{{fld|number}}</div>
-                            <div ng-click="addStrToQuery(fld)" ng-if="!isNumber(fld)">{{fld | characters:12: true}}</div>
+                            <div ng-click="addNumToQuery(fld,$index)" ng-if="isNumber(fld)">{{fld|number}}</div>
+                            <div ng-click="addStrToQuery(fld,$index)" ng-if="!isNumber(fld)">{{fld | characters:15: true}}</div>
                         </td>
                     </tr>
-                    <tr>
+                    <!-- this if for model configuration -->
+                    <tr ng-show="modelMode">
                         <div class="form-group">
                         <td ng-repeat="fld in show.labels" align="center">
                             <label class="switch switch-primary">
@@ -195,7 +104,9 @@
 </div>
 
 <br>
-<div class="row">
+
+<!-- this configures global model parameters -->
+<div class="row" ng-show="modelMode">
         <div class="col-md-12" align="center">
             <table style="table-layout: fixed;">
                 <tr>
@@ -235,18 +146,10 @@
 
 
 
-
-<div class="row">
-     <div class="col-md-offset-2 col-md-8">
-
-     </div>
-</div>
-
-
 <!-- describe table -->
 <div class="row">
     <div class="col-md-12">
-        <div ng-show="summaryON" class="box" ng-init="showSummaryBox=false">
+        <div ng-show="summaryON" class="box" ng-init="showSummaryBox=true">
             <div class="box-header" data-original-title>
                 <h2><i class="fa fa-bar-chart-o"></i><span class="break"></span>Table Describe - {{activeID|uppercase}}</h2>
                 <div class="box-icon">
