@@ -12,15 +12,15 @@
         <div style="white-space:nowrap;">
             <form class="form-inline" ng-submit="showSampleRows(activeID,sorted,descending)">
                 <div class="form-group" style="border: 0px; padding: 0px; margin: 0px; width: 59%;">
-                    <input id="filterQueryInput" class="form-control" ng-model='filterQuery' placeholder="Enter filter">
+                    <input id="filterQueryInput" class="form-control" ng-model='$parent.filterQuery' placeholder="Enter filter">
                 </div>
                 <div class="form-group" style="border: 0px; padding: 0px; margin: 0px; width: 20%;">
-                    <select ng-model='groupBy' class="form-control">
+                    <select ng-model='$parent.groupBy' class="form-control">
                         <option ng-repeat="fld in show.labels">{{fld}}</option>
                     </select>
                 </div>
                 <div class="form-group" style="border: 0px; padding: 0px; margin: 0px; width: 20%;">
-                    <select ng-model='metric' class="form-control">
+                    <select ng-model='$parent.metric' class="form-control">
                         <option ng-repeat="fld in aggregations">{{fld}}</option>
                     </select>
                 </div>
