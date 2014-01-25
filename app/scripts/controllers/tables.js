@@ -4,7 +4,7 @@ angular.module('usuiApp')
   .controller('TablesCtrl', function ($scope,globals,usimpandas,ngTableParams) {
 
     // model mode allows the estimation of models, otherwise just show tables
-    $scope.modelMode = false;
+    $scope.modelMode = $scope.isActive("visualmodeler");
     $scope.filterQuery = "";
 
     var NUMSAMPLEROWS = 10; // I'm not totally sure this will work if you change it
@@ -88,7 +88,7 @@ angular.module('usuiApp')
             $.grep(Object.keys($scope.selectedFields),function (v) {return $scope.selectedFields[v];})
                 .map(function(x){return x in $scope.selectedFieldsTransform && $scope.selectedFieldsTransform[x] != "None"
                     ? $scope.selectedFieldsTransform[x]+"("+x+")" : x})
-                .join('+') + ($scope.patsyAddOn?"+"+$scope.patsyAddOn:"");
+                .join(' + ') + ($scope.patsyAddOn?"+"+$scope.patsyAddOn:"");
     }
     $scope.$watchCollection('selectedFields', function () { updatePatsyModel(); })
     $scope.$watchCollection('selectedFieldsTransform', function () { updatePatsyModel(); })

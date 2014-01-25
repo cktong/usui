@@ -10,44 +10,5 @@
     </div>
 </div>
 
-<!-- this configures global model parameters -->
-<div class="row" ng-show="modelMode">
-        <div class="col-md-12" align="center">
-            <table style="table-layout: fixed;">
-                <tr>
-                    <td colspan="4" style="word-break: break-all; word-wrap: break-word; width:400px;">
-                        <div class="hero-unit">
-                            Patsy Equation: {{patsyModel}}
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="4">
-                        <input class="form-control" ng-model='patsyAddOn' placeholder="Enter custom patsy variables">
-                    </td>
-                    </tr><tr>
-                    <td>
-                        <select class="form-control" ng-model="dep_var" ng-options="fld for fld in show.labels">
-                        </select>
-                    </td>
-                    <td>
-                        <select class="form-control" ng-model="dep_var_transform" ng-options="trans for trans in transformations">
-                        </select>
-                    </td>
-                    <td>
-                        <select class="form-control" ng-model="output_transform" ng-options="trans for trans in transformations">
-                        </select>
-                    </td>
-
-                    <td>
-                        <button ng-click="execModel()" type="button" class="btn btn-default btn-md">
-                            Estimate Model
-                        </button>
-                    </td>
-                </tr>
-            </table>
-    </div>
-</div>
-
 <!-- describe table -->
 <div class="rows" ng-include src="'views/describe.html'"></div>
