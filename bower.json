@@ -14,7 +14,8 @@
     "angularjs-nvd3-directives": "*",
     "ng-table": "*",
     "angular-chosen": "*",
-    "angular-truncate": "*"
+    "angular-truncate": "*",
+    "angular-leaflet-directive": "*"
   },
   "devDependencies": {
     "angular-mocks": "~1.0.7",
