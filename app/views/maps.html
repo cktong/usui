@@ -1,0 +1,7 @@
+<div class="row">
+    <div class="col-md-12" align="center">
+        <span ng-click="setActiveTable(id)" ng-repeat="id in list" ng-class="activeID === undefined || '{{id}}' == activeID ? '' : 'text-muted'">{{id|uppercase}}<span ng-hide="$last"> | </span></span>
+    </div>
+</div>
+
+<leaflet height="600px" center="sanfrancisco"></leaflet>

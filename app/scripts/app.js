@@ -40,10 +40,10 @@
         templateUrl: 'views/tables.html',
         controller: 'TablesCtrl'
       })
-      .state('/map', {
-        url: '/map',
-        templateUrl: 'views/map.html',
-        controller: 'MapCtrl'
+      .state('/maps', {
+        url: '/maps',
+        templateUrl: 'views/maps.html',
+        controller: 'MapsCtrl'
       })
       .state('/models', {
         url: '/models',
