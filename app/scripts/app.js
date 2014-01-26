@@ -8,7 +8,8 @@
   'truncate',
   'CornerCouch',
   'nvd3ChartDirectives',
-  'ngTable'
+  'ngTable',
+  'leaflet-directive'
   ])
   .config(function ($stateProvider, $urlRouterProvider) {
 
