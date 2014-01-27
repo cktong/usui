@@ -54,6 +54,6 @@ angular.module('usuiApp')
 		var url= "http://localhost:8765/datasets/apartments?callback=JSON_CALLBACK&limit=100&query=&groupby=City&metric=sum()&page=1" 
 
 		usimpandas.query(url, "show", $scope)
-		console.log(map)
+
 		//setInterval(function(){console.log($scope.show)}, 3000)
     });
