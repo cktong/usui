@@ -45,6 +45,11 @@
         templateUrl: 'views/maps.html',
         controller: 'MapsCtrl'
       })
+      .state('/visualmodeler', {
+        url: '/visualmodeler',
+        templateUrl: 'views/visualmodeler.html',
+        controller: 'TablesCtrl'
+      })
       .state('/models', {
         url: '/models',
         templateUrl: 'views/models.html',

@@ -5,7 +5,7 @@
 'use strict';
 
 angular.module('usuiApp')
-    .service('globals', function ($rootScope) {
+    .service('globals', function ($rootScope,$location) {
         $rootScope.transformations = ['None','np.log1p','np.log10','np.exp','np.sqrt','np.square','np.reciprocal','np.absolute','np.floor','np.ceil'];
         $rootScope.aggregations = ['sum()','mean()','max()','min()','quantile()'];
         $rootScope.sigColor = function(val) {
@@ -18,4 +18,8 @@ angular.module('usuiApp')
         $rootScope.isNumber = function (value) {
             return angular.isNumber(value);
         };
+        $rootScope.isActive = function(viewLocation) {
+            return ($location.path().indexOf(viewLocation) != -1);
+        };
+
     });
