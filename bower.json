@@ -16,7 +16,8 @@
     "angular-chosen": "*",
     "angular-truncate": "*",
     "github": "*",
-    "angular-github-adapter": "*"
+    "angular-github-adapter": "*",
+    "angular-leaflet-directive": "*"
   },
   "devDependencies": {
     "angular-mocks": "~1.0.7",

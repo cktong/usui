@@ -9,7 +9,8 @@
   'CornerCouch',
   'pascalprecht.github-adapter',
   'nvd3ChartDirectives',
-  'ngTable'
+  'ngTable',
+  'leaflet-directive'
   ])
   .config(function ($stateProvider, $urlRouterProvider) {
 
@@ -39,6 +40,11 @@
         url: '/tables',
         templateUrl: 'views/tables.html',
         controller: 'TablesCtrl'
+      })
+      .state('/maps', {
+        url: '/maps',
+        templateUrl: 'views/maps.html',
+        controller: 'MapsCtrl'
       })
       .state('/visualmodeler', {
         url: '/visualmodeler',
