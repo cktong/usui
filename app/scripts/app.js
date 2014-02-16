@@ -7,6 +7,7 @@
   'ui.router',
   'truncate',
   'CornerCouch',
+  'pascalprecht.github-adapter',
   'nvd3ChartDirectives',
   'ngTable'
   ])

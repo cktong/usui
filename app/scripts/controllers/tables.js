@@ -84,7 +84,7 @@ angular.module('usuiApp')
     $scope.output_transform = "np.exp"; // inverse transform of output variable (for simulation)
 
     function updatePatsyModel() {
-        $scope.patsyModel = $scope.dep_var_transform + "(" + $scope.dep_var + ") ~ " +
+        $scope.patsyModel = "" +
             $.grep(Object.keys($scope.selectedFields),function (v) {return $scope.selectedFields[v];})
                 .map(function(x){return x in $scope.selectedFieldsTransform && $scope.selectedFieldsTransform[x] != "None"
                     ? $scope.selectedFieldsTransform[x]+"("+x+")" : x})
@@ -96,7 +96,7 @@ angular.module('usuiApp')
 
     $scope.execModel = function () {
         if($scope.patsyModel) {
-            usimpandas.patsymodel($scope,$scope.patsyModel,$scope.activeID,"hedonicmodel");
+            usimpandas.patsymodel($scope,$scope.patsyModel,$scope.activeID,"hedonicmodel",$scope.dep_var,$scope.dep_var_transform,$scope.output_transform);
         } else {
             usimpandas.model($scope,$scope.selectedFields,$scope.activeID,"hedonicmodel",$scope.dep_var,$scope.dep_var_transform,$scope.output_transform);
         }

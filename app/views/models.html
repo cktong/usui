@@ -6,8 +6,8 @@
                     <thead>
                     <tr><th>Available models:</th></tr>
                     </thead>
-                    <tr ng-repeat="model in modelsdb.rows | orderBy:'id':true"><td>
-                        <a ng-href="#/models/{{model.id}}">{{model.id}} <small class='muted' ng-show="model.doc.model">as {{model.doc.model}}</small></a>
+                    <tr ng-repeat="model in config_list"><td>
+                        <a ng-href="#/models/{{model}}">{{model}}<small class='muted'></small></a>
                     </td></tr>
                     <tr><td>
                         <button ng-click="newModel()" class="btn btn-default">Create new</button>

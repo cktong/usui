@@ -32,12 +32,7 @@ angular.module('usuiApp')
                 var req =
                 {
                     "add_constant": true,
-                    "output_names": [
-                        "coeff-reshedonic-rent.csv",
-                        "RESIDENTIAL HEDONIC MODEL (RENT)",
-                        "residential_rent",
-                        "residential_rent"
-                    ],
+                    "output_varname": "residential_rent"
                 };
                 req["dep_var"] = dep_var;
                 req["dep_var_transform"] = dep_var_transform;
@@ -48,18 +43,16 @@ angular.module('usuiApp')
 
                 this.query(this.root+"execmodel?callback=JSON_CALLBACK&json=" + JSON.stringify(req),"model_results",$scope);
             },
-            patsymodel: function($scope,patsyModel,table,model) {
+            patsymodel: function($scope,patsyModel,table,model,dep_var,dep_var_transform,output_transform) {
                 var req =
                 {
-                    "output_names": [
-                        "coeff-reshedonic-rent.csv",
-                        "RESIDENTIAL HEDONIC MODEL (RENT)",
-                        "residential_rent",
-                        "residential_rent"
-                    ]
+                    "output_varname": "residential_rent"
                 };
                 var patsy = encodeURIComponent(patsyModel);
                 console.log(patsy);
+                req["dep_var"] = dep_var;
+                req["dep_var_transform"] = dep_var_transform;
+                req["output_transform"] = output_transform;
                 req["patsy"] = patsy;
                 req["table"] = "dset.fetch('"+table+"')";
                 req["model"] = model;
@@ -95,7 +88,7 @@ angular.module('usuiApp')
                         $scope.safeApply(function() {$scope[attr] = data;} );
                     })
                     .error(function (data, status) {
-                        growl("error","Bamboo query failed",status);
+                        growl("error","Server query failed",status);
                     });
 
             }

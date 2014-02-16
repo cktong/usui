@@ -9,17 +9,13 @@
             <tr>
                 <th></th>
                 <th>Name</th>
-                <th>Model</th>
-                <th>Table</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
-            <tr ng-repeat="model in modelsdb.rows | orderBy:'id':true">
-                <td><a ng-href="#/models/{{model.id}}">View</a></td>
-                <td>{{model.id}}</td>
-                <td>{{model.doc.model}}</td>
-                <td>{{model.doc.table}}</td>
+            <tr ng-repeat="model in config_list">
+                <td><a ng-href="#/models/{{model}}">View</a></td>
+                <td>{{model}}</td>
                 <td><a ng-href="#/models" ng-click="deleteChart(model.id)">Delete</a></td>
             </tr>
             </tbody>

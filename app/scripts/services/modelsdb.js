@@ -1,7 +1,42 @@
 'use strict';
 
 angular.module('usuiApp')
-  .service('modelsdb', function ($rootScope, cornercouch) {
+  .service('modelsdb', function ($http, $rootScope) {
+        $rootScope.safeApply = function(fn) {
+            var phase = this.$root.$$phase;
+            if(phase == '$apply' || phase == '$digest') {
+                if(fn && (typeof(fn) === 'function')) {
+                    fn();
+                }
+            } else {
+                this.$apply(fn);
+            }
+        };
+    return {
+        root: "http://localhost:8765/",
+        list: function ($scope) {
+            this.query(this.root+"configs?callback=JSON_CALLBACK","config_list",$scope);
+        },
+        getbyind: function(ind,$scope) {
+            this.query(this.root+"config/"+ind+"?callback=JSON_CALLBACK","model",$scope);
+        },
+        compile: function(config,$scope) {
+            this.query(this.root+"compilemodel?config="+JSON.stringify(config)+"&callback=JSON_CALLBACK","model_source",$scope);
+        },
+        query: function (url,attr,$scope) {
+            console.log(url);
+            $http.jsonp(url,{timeout: 5000})
+                .success(function (data) {
+                    console.log(data);
+                    $scope.safeApply(function() {$scope[attr] = data;} );
+                })
+                .error(function (data, status) {
+                    growl("error","Model configuration query failed",status);
+                });
+
+        }
+    };
+        /*
     var svr = cornercouch("https://urbansim.cloudant.com","JSONP");
     svr.login('urbansim','Visua1ization');
     var modelsdb = svr.getDB("bayarea_models");
@@ -61,4 +96,5 @@ angular.module('usuiApp')
     }
 
     return modelsdb;
+*/
 });

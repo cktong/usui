@@ -21,7 +21,7 @@
 <span ng-show="model.output_transform"><b>Output transformation:</b> {{model.output_transform}}<br></span>
 <br>
 <span ng-show="model.segment"><b>Segment on:</b> {{model.segment.join(',')}}<br></span>
-<span><b>Output names:</b> {{model.output_names.join(', ')}}<br></span>
+<span><b>Output name:</b> {{model.output_varname}}<br></span>
 </div>
 <br>
 
@@ -34,9 +34,12 @@
 <div ng-hide="isEditing">
 <p class="btn-group">
 <button class="btn btn-mini btn-info" ng-click="editModel()">Edit</button>
+<button ng-hide="model.model == 'variablelibrary'" class="btn btn-mini btn-success" ng-click="compileModel()">Compile</button>
 <button ng-hide="model.model == 'variablelibrary'" class="btn btn-mini btn-success" ng-click="estimateModel()">Estimate</button>
 <button ng-hide="model.model == 'variablelibrary'" class="btn btn-mini btn-success" ng-click="simulateModel()">Simulate</button>
 </p>
 </div>
 
 <div ng-include src="'views/model_results.html'"></div>
+
+<div style="white-space: pre-wrap;">{{model_source.estimate}}</div>

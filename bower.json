@@ -14,7 +14,9 @@
     "angularjs-nvd3-directives": "*",
     "ng-table": "*",
     "angular-chosen": "*",
-    "angular-truncate": "*"
+    "angular-truncate": "*",
+    "github": "*",
+    "angular-github-adapter": "*"
   },
   "devDependencies": {
     "angular-mocks": "~1.0.7",
