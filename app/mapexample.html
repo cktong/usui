@@ -1,6 +1,18 @@
+<html>
+<head>
+	<script src="bower_components/angular/angular.js"></script>
+	<script src="bower_components/leaflet-dist/leaflet.js"></script>
+	<script src="bower_components/leaflet-tilelayer-geojson/TileLayer.GeoJSON.js"></script>
+	<script src="bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.js"></script>
+	<link rel="stylesheet" href="bower_components/leaflet-dist/leaflet.css" />
+
+</head>
+<body>
+	<script>		
+
 'use strict';
 
-angular.module('usuiApp')
+angular.module('usuiApp', ['leaflet-directive'])
 	.controller("MapsCtrl", ["$scope", function($scope, $http, usimpandas){
 
 	    angular.extend($scope, {
@@ -86,3 +98,13 @@ angular.module('usuiApp')
 
 		//setInterval(function(){console.log($scope.show)}, 3000)
     }]);
+
+	</script>
+
+	<div ng-app='usuiApp' ng-controller='MapsCtrl'>
+		<h1> GeoJSON TileLayers</h1>
+		<leaflet height="600px" width="600px" center="sanfrancisco" layers="layers"></leaflet>
+		<p> Data source: Openstreetmap (buildings data) </p>
+	</div>
+</body>
+</html>
